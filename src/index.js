@@ -14,8 +14,7 @@ app.use(bodyParser.json());
 async function init() {
     spinner.text = 'Loading schema';
     spinner.start();
-    await db.init();
-    spinner.stop();
+    db.init(() => spinner.stop());
 }
 
 app.use(express.static('client/dist'));
@@ -23,5 +22,5 @@ app.use('/api', api);
 
 app.listen(config.PORT, async () => {
     console.log(`API Server Viz listening on port ${config.PORT}\n`)
-    await init();
+    init();
 });

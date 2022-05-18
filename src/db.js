@@ -23,7 +23,7 @@ class DBStore {
 
     async loadFromServer() {
         this.definitions = await getResourceDefinitions(account)
-        await refresh();
+        await this.refresh();
     }
     
     async loadFromStore() {
@@ -35,11 +35,15 @@ class DBStore {
     }
     
     async load() {
+        this.loading = true;
+        let prom;
         if (config.USE_STORE) {
-            await this.loadFromStore();
+            prom = this.loadFromStore();
         } else {
-            await this.loadFromServer();
+            prom = this.loadFromServer();
         }
+
+        return prom.then(() => this.loading = false);
     }
 
     async store() {
@@ -65,5 +69,16 @@ class DBStore {
     }
 }
 
-const db = new DBStore();
+const dbstore = new DBStore();
+const db = {
+    definitions: () => dbstore.definitions,
+    instances: () => dbstore.instances,
+    loading: () => dbstore.loading,
+    init: async (cb) => { 
+        if (cb) {
+            dbstore.initPromise = dbstore.initPromise.then(cb); 
+        }
+        return dbstore.initPromise; 
+    }
+}
 export default db;
