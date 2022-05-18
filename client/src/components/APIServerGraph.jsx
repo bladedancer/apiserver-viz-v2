@@ -8,8 +8,7 @@ import {
     useRegisterEvents,
     useLoadGraph,
     useSetSettings
-} from "react-sigma-v2";
-import "react-sigma-v2/lib/react-sigma-v2.css";
+} from "@react-sigma/core";
 
 const LINK_TYPE_SCOPE = 'scope';
 

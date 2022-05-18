@@ -14,8 +14,8 @@ import { useLayoutForceAtlas2, useWorkerLayoutForceAtlas2 } from "@react-sigma/l
 
 export const LayoutsControl = () => {
   const sigma = useSigma();
-  const [layout, setLayout] = useState<string>("circular");
-  const [opened, setOpened] = useState<boolean>(false);
+  const [layout, setLayout] = useState("circular");
+  const [opened, setOpened] = useState(false);
   const layoutCircular = useLayoutCircular();
   const layoutCirclepack = useLayoutCirclepack();
   const layoutRandom = useLayoutRandom();
