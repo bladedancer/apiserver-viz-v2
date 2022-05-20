@@ -14,14 +14,19 @@ import { useLayoutForceAtlas2, useWorkerLayoutForceAtlas2 } from "@react-sigma/l
 
 export const LayoutsControl = () => {
   const sigma = useSigma();
-  const [layout, setLayout] = useState("circular");
+  const [layout, setLayout] = useState("forceAtlas");
   const [opened, setOpened] = useState(false);
   const layoutCircular = useLayoutCircular();
   const layoutCirclepack = useLayoutCirclepack();
   const layoutRandom = useLayoutRandom();
   const layoutNoverlap = useLayoutNoverlap();
   const layoutForce = useLayoutForce({ maxIterations: 100 })
-  const layoutForceAtlas2 = useLayoutForceAtlas2({ iterations: 100 })
+  const layoutForceAtlas2 = useLayoutForceAtlas2({
+    iterations: 100,
+    adjustSizes: true,
+    edgeWeightInfluence: 1,
+    getEdgeWeight: 'weight'
+  });
 
   const layouts = useMemo(()=> {
     return {
@@ -36,27 +41,30 @@ export const LayoutsControl = () => {
       },
       noverlaps: {
         layout: layoutNoverlap,
-        worker: useWorkerLayoutNoverlap,
+        worker: useWorkerLayoutNoverlap
       },
       forceDirected: {
         layout: layoutForce,
-        worker: useWorkerLayoutForce,
+        worker: useWorkerLayoutForce
       },
       forceAtlas: {
         layout: layoutForceAtlas2,
         worker: useWorkerLayoutForceAtlas2,
+        settings: {
+          weighted: true
+        }
       },
     }
   }, [layoutCircular,
-layoutCirclepack,
-layoutRandom,
-layoutNoverlap,
-layoutForce,
-layoutForceAtlas2,]);
+      layoutCirclepack,
+      layoutRandom,
+      layoutNoverlap,
+      layoutForce,
+      layoutForceAtlas2,]);
 
   useEffect(() => {
     const { positions } = layouts[layout].layout;
-    animateNodes(sigma.getGraph(), positions(), { duration: 1000 });
+    animateNodes(sigma.getGraph(), positions(), { duration: 2000 });
   }, [layout, layouts, sigma]);
 
   useEffect(() => {
@@ -69,11 +77,6 @@ layoutForceAtlas2,]);
 
   return (
     <>
-      <div>
-        {layouts[layout] && layouts[layout].worker && (
-          <WorkerLayoutControl layout={layouts[layout].worker} settings={{}} />
-        )}
-      </div>
       <div>
         <div className="react-sigma-control">
           <button onClick={() => setOpened((e) => !e)}>
@@ -109,6 +112,11 @@ layoutForceAtlas2,]);
             </ul>
           )}
         </div>
+        <div>
+        {layouts[layout] && layouts[layout].worker && (
+          <WorkerLayoutControl layout={layouts[layout].worker} settings={layouts[layout].settings} />
+        )}
+      </div>
       </div>
     </>
   );
