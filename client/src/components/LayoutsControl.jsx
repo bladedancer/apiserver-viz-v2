@@ -17,22 +17,42 @@ export const LayoutsControl = () => {
   const [layout, setLayout] = useState("forceAtlas");
   const [opened, setOpened] = useState(false);
   const layoutCircular = useLayoutCircular();
-  const layoutCirclepack = useLayoutCirclepack();
+  const layoutCirclepack = useLayoutCirclepack({
+    hierarchyAttributes: ["color"]    
+  });
   const layoutRandom = useLayoutRandom();
-  const layoutNoverlap = useLayoutNoverlap();
-  const layoutForce = useLayoutForce({ maxIterations: 100 })
+  const layoutNoverlap = useLayoutNoverlap({
+    maxIterations: 100,
+    settings: {
+      expansion: 3,
+      gridSize: 4,
+      margin: 10 
+    }
+  });
+  const layoutForce = useLayoutForce({
+    maxIterations: 100,
+    settings: {
+      repulsion: 1,
+      attraction: .2,
+      gravity: 1,
+      inertia: 4
+    }  
+  });
+
   const layoutForceAtlas2 = useLayoutForceAtlas2({
     iterations: 100,
-    adjustSizes: true,
-    barnesHutOptimize: false,
-    barnesHutTheta: 10,
-    edgeWeightInfluence: 1,
-    gravity: 1,
-    linLogMode: false,
-    outboundAttractionDistribution: false,
-    scalingRatio: 10,
-    slowDown: 1,
-    strongGravityMode: false,
+    settings: {
+      adjustSizes: true,
+      barnesHutOptimize: true,
+      barnesHutTheta: 10,
+      edgeWeightInfluence: 1,
+      gravity: 1,
+      linLogMode: false,
+      outboundAttractionDistribution: false,
+      scalingRatio: 10,
+      slowDown: 1,
+      strongGravityMode: false
+    }
   });
 
   const layouts = useMemo(()=> {
