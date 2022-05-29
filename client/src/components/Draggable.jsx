@@ -56,6 +56,8 @@ const Draggable = ({ children }) => {
       const dragState = updateableState.current;
       setDragState({
         ...dragState,
+        x: null,
+        y: null,
         dragging: false,
       });
     };
