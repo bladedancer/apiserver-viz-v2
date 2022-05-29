@@ -76,11 +76,18 @@ function references(scopes, def) {
     return targets;
 }
 
+function color(index, domain) {
+    return chroma.scale(['yellow', 'navy']).mode('lch').colors(domain)[index];
+}
+
 function nodify(definitions) {
     let scopeColor = {};
 
     let scopeNames = Object.values(definitions)
         .filter(def => !def.resource.spec.scope)
+        .sort((a,b) =>
+            a.resource.metadata.scope.name.localeCompare(a.resource.metadata.scope.name) ||
+            a.resource.spec.kind.localeCompare(b.resource.spec.kind))
         .map(def => def.resource.spec.kind);
 
     let nodes = Object.values(definitions).map(def => {
@@ -92,13 +99,12 @@ function nodify(definitions) {
             kind: def.resource.spec.kind,
             isScope,
             scope: isScope ? null : { name: def.resource.spec.scope.kind },
-            size: isScope ? 15 : 5,
+            size: isScope ? 10 : 5,
             links: [],
             references: references(scopeNames, def),
-            color: isScope ?
-                scopeColor[def.resource.spec.kind] = (scopeColor[def.resource.spec.kind] || chroma.random().hex())
-                : scopeColor[def.resource.spec.scope.kind] = (scopeColor[def.resource.spec.scope.kind] || chroma.random().hex())
-        }
+            color: isScope ? color(scopeNames.indexOf(def.resource.spec.kind), scopeNames.length)
+                : color(scopeNames.indexOf(def.resource.spec.scope.kind), scopeNames.length)
+        };
     });
 
     // Resolve the scope ids.
@@ -120,9 +126,8 @@ function nodify(definitions) {
                 target: n.scope.id,
                 refType: LINK_TYPE_SCOPE,
                 size: 1,
-                label: '',
                 type: 'line',
-                color: chroma(n.color).alpha(0.9).hex(),
+                color: chroma(n.color).alpha(0.5).hex(),
                 weight: 10,
             });
         }
@@ -142,7 +147,7 @@ function nodify(definitions) {
                 weight: ref.type === LINK_TYPE_HARD ? 5 : 1,
                 label: '',
                 type: 'arrow',
-                color: chroma(targetNode.color).alpha(0.1).hex()
+                color: chroma(targetNode.color).alpha(0.5).hex()
             });
         });
     });

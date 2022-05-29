@@ -24,8 +24,15 @@ export const LayoutsControl = () => {
   const layoutForceAtlas2 = useLayoutForceAtlas2({
     iterations: 100,
     adjustSizes: true,
-    edgeWeightInfluence: 1,
-    getEdgeWeight: 'weight'
+    barnesHutOptimize: false,
+    barnesHutTheta: 0.5,
+    edgeWeightInfluence: 5,
+    gravity: 5,
+    linLogMode: false,
+    outboundAttractionDistribution: true,
+    scalingRatio: 5,
+    slowDown: 5,
+    strongGravityMode: false,
   });
 
   const layouts = useMemo(()=> {

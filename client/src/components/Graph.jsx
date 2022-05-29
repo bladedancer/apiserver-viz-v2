@@ -3,11 +3,13 @@ import {
     SigmaContainer,
     ControlsContainer,
     SearchControl,
-    ZoomControl
+    ZoomControl,
+    FullScreenControl
 } from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
 import APIServerGraph from "./APIServerGraph.jsx";
 import { LayoutsControl } from "./LayoutsControl.jsx";
+import Draggable from './Draggable.jsx';
 
 const Graph = () => {
     const [graphState, setGraphState] = useState({
@@ -27,10 +29,16 @@ const Graph = () => {
       }, [setGraphState]);
 
     return (
-        <SigmaContainer>
-            <APIServerGraph definitions={graphState.definitions} />
+        <SigmaContainer initialSettings={{
+            renderEdgeLabels: true,
+            defaultNodeType: "circle"
+        }}>
+            <APIServerGraph definitions={graphState.definitions}>
+                <Draggable />
+            </APIServerGraph>
             <ControlsContainer position={"bottom-right"}>
                 <ZoomControl />
+                <FullScreenControl />
                 <LayoutsControl />
             </ControlsContainer>
             <ControlsContainer position={"top-right"}>
