@@ -18,7 +18,8 @@ export const LayoutsControl = () => {
   const [opened, setOpened] = useState(false);
   const layoutCircular = useLayoutCircular();
   const layoutCirclepack = useLayoutCirclepack({
-    hierarchyAttributes: ["color"]    
+    hierarchyAttributes: ["color"],
+    scale: 5
   });
   const layoutRandom = useLayoutRandom();
   const layoutNoverlap = useLayoutNoverlap({
@@ -78,7 +79,16 @@ export const LayoutsControl = () => {
         layout: layoutForceAtlas2,
         worker: useWorkerLayoutForceAtlas2,
         settings: {
-          weighted: true
+          adjustSizes: true,
+          barnesHutOptimize: true,
+          barnesHutTheta: 10,
+          edgeWeightInfluence: 1,
+          gravity: 0,
+          linLogMode: false,
+          outboundAttractionDistribution: false,
+          scalingRatio: 10,
+          slowDown: 1,
+          strongGravityMode: false
         }
       },
     }

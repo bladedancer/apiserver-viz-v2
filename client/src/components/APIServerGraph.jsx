@@ -216,7 +216,11 @@ const APIServerGraph = ({definitions, children}) => {
                 const newData = { ...data, hidden: false };
 
                 if (hoveredNode && !graph.extremities(edge).includes(hoveredNode)) {
-                    newData.hidden = true;
+                    //newData.hidden = true;
+                    newData.oldColor = newData.color;
+                    newData.color = "#E2E2E2"
+                } else if (newData.oldColor) {
+                    newData.color = oldColor;
                 }
                 return newData;
             },
