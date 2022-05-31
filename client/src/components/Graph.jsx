@@ -12,21 +12,24 @@ const Graph = ({nodeData, children}) => {
                 data: {
                     id: n.id,
                     label: n.kind,
-                    color: n.color
+                    color: n.color,
+                    //parent: n.isScope ? '' : n.scope.id,
                 }
             });
         });
         nodeData.nodes.forEach(n => {
             n.links.forEach(l => {
+                // if (!n.isScope && (l.target === n.scope.id)) {
+                //     // No scope links
+                //     return;
+                // }
+
                 const targetNode = nodeData.nodes.find(tn => tn.id === l.target);
-                console.log(targetNode);
-                console.log(`${n.color} ${targetNode.color}`);
                 els.push({
                     data: {
                         id: l.source + '-' + l.target,
                         source: l.source,
                         target: l.target,
-                        parent: n.isScope ? '' : n.scope.id,
                         sourceColor: n.color,
                         targetColor: targetNode.color,
                         gradient: `${n.color} ${targetNode.color}`
@@ -53,7 +56,7 @@ const Graph = ({nodeData, children}) => {
             style: {
                 label: "data(label)",
                 "font-size": "12",
-                color: "white",
+                color: "black",
                 "text-halign": "center",
                 "text-valign": "center"
             }
@@ -83,9 +86,16 @@ const Graph = ({nodeData, children}) => {
                 "text-border-color": "black",
                 "text-border-style": "solid",
                 "text-border-width": 0.5,
-                "text-border-opacity": 1
+                "text-border-opacity": 1,
 
-                // "text-rotation": "autorotate"
+                "text-rotation": "autorotate"
+            }
+        },
+        {
+            selector: ':parent',
+            style: {
+              'background-opacity': 0.333,
+              'border-color': '#2B65EC'
             }
         }
     ]

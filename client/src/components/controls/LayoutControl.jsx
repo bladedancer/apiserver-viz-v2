@@ -3,33 +3,87 @@ import { FaProjectDiagram } from "react-icons/fa";
 import { useCy } from '../../hooks/useCy';
 import Cytoscape from 'cytoscape';
 import COSEBilkent from 'cytoscape-cose-bilkent';
+import avsdf from 'cytoscape-avsdf';
+import fcose from 'cytoscape-fcose';
+import cola from 'cytoscape-cola';
 
+Cytoscape.use( cola );
+Cytoscape.use( fcose );
+Cytoscape.use( avsdf );
 Cytoscape.use(COSEBilkent);
 
 const LayoutControl = () => {
     const cy = useCy();
     const [opened, setOpened] = useState(false);
-    const [layout, setLayout] = useState("circle");
+    const [layout, setLayout] = useState("concentric");
 
     const layouts = useMemo(()=> {
         return {
+          avsdf: {
+            name: 'avsdf',
+            //https://github.com/iVis-at-Bilkent/cytoscape.js-avsdf
+          },
+          breadthfirst: {
+            name: 'breadthfirst',
+            circle: true,
+            nodeDimensionsIncludeLabels: true,
+            //https://js.cytoscape.org/#layouts/breadthfirst
+          },
           circular: {
             name: 'circle',
+            nodeDimensionsIncludeLabels: true
+            //https://js.cytoscape.org/#layouts/circle
+          },
+          'cola': {
+            name: 'cola',
+            maxSimulationTime: 60000,
+            randomize: true,
+            fit: false,
+            //https://github.com/cytoscape/cytoscape.js-cola
+          },
+          concentric: {
+            name: 'concentric',
+            nodeDimensionsIncludeLabels: true,
+            // todo: https://js.cytoscape.org/#layouts/concentric
+          },
+          'cose': {
+            name: 'cose',
+            nodeDimensionsIncludeLabels: true,
+            // https://js.cytoscape.org/#layouts/cose
           },
           'cose-bilkent': {
                 name: "cose-bilkent",
                 // other options
                 padding: 50,
                 nodeDimensionsIncludeLabels: true,
-                 idealEdgeLength: 100,
+                idealEdgeLength: 100,
                 edgeElasticity: 0.1,
-                 nodeRepulsion: 8500,
+                nodeRepulsion: 8500,
+            },
+            'fcose': {
+                name: 'fcose',
+                nodeDimensionsIncludeLabels: true,
+                //https://github.com/iVis-at-Bilkent/cytoscape.js-fcose
+            },
+            'grid': {
+                name: 'grid'
+            },
+            'random': {
+                name: 'random'
             }
         };
     });
 
+    // Layout on load ... needs work
     useEffect(async () => {
-        cy.layout(layouts[layout]).run();
+        cy && cy.on("add", ()=> {
+            cy.layout(layouts[layout]).run();
+        });
+    }, [cy]);
+
+    // Update layout on change
+    useEffect(async () => {
+        cy && cy.nodes().length && cy.layout(layouts[layout]).run();
     }, [cy, layout]);
 
     return (
@@ -59,6 +113,7 @@ const LayoutControl = () => {
                                             style={{ fontWeight: layout === name ? "bold" : "normal", width: "100%", "whiteSpace": "nowrap" }}
                                             onClick={() => {
                                                 setLayout(name);
+                                                setOpened(false);
                                             }}
                                         >
                                             {name}
