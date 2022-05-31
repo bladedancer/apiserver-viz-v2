@@ -4,6 +4,7 @@ import COSEBilkent from 'cytoscape-cose-bilkent';
 import CytoscapeComponent from 'react-cytoscapejs';
 import chroma from "chroma-js";
 import { JSONPath } from "jsonpath-plus";
+import { FaNs8 } from 'react-icons/fa';
 
 Cytoscape.use(COSEBilkent);
 
@@ -195,16 +196,22 @@ const Graph = () => {
         });
         nodeData.nodes.forEach(n => {
             n.links.forEach(l => {
+                const targetNode = nodeData.nodes.find(tn => tn.id === l.target);
+                console.log(targetNode);
+                console.log(`${n.color} ${targetNode.color}`);
                 els.push({
                     data: {
                         id: l.source + '-' + l.target,
                         source: l.source,
-                        target: l.target
+                        target: l.target,
+                        parent: n.isScope ? '' : n.scope.id,
+                        sourceColor: n.color,
+                        targetColor: targetNode.color,
+                        gradient: `${n.color} ${targetNode.color}`
                     }
                 })
             });
         });
-        console.log(els);
         setElements(els);
     }, [graphState]);
 
@@ -238,6 +245,10 @@ const Graph = () => {
             style: {
                 "curve-style": "bezier",
                 "target-arrow-shape": "triangle",
+                "target-arrow-color": "data(targetColor)",
+                "line-fill": "linear-gradient",
+                "line-gradient-stop-colors": "data(gradient)",
+                "line-gradient-stop-positions": "50",
                 width: 1.5
             }
         },
