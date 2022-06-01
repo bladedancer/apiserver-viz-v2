@@ -40,7 +40,7 @@ const LayoutControl = () => {
             nodeDimensionsIncludeLabels: true,
             infinite: true,
             edgeLength: (e) => {
-                let length = e.source().data("color") === e.target().data("color") ? 100 : 300;
+                let length = e.source().data("groupId") === e.target().data("groupId") ? 100 : 300;
                 return length;
             },
             convergenceThreshold: -1,
@@ -53,6 +53,10 @@ const LayoutControl = () => {
           concentric: {
             name: 'concentric',
             nodeDimensionsIncludeLabels: true,
+            concentric: (n) => {
+                let id = +n.data("groupId");
+                return id * id;
+            },
             // todo: https://js.cytoscape.org/#layouts/concentric
           },
           'cose': {
