@@ -13,6 +13,7 @@ const Graph = ({nodeData, children}) => {
                     id: n.id,
                     label: n.kind,
                     color: n.color,
+                    linkType: n.refType,
                     //parent: n.isScope ? '' : n.scope.id,
                 }
             });
@@ -56,7 +57,7 @@ const Graph = ({nodeData, children}) => {
             style: {
                 label: "data(label)",
                 "font-size": "12",
-                color: "black",
+                color: "white",
                 "text-halign": "center",
                 "text-valign": "center"
             }

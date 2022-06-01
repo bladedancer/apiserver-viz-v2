@@ -15,7 +15,8 @@ Cytoscape.use(COSEBilkent);
 const LayoutControl = () => {
     const cy = useCy();
     const [opened, setOpened] = useState(false);
-    const [layout, setLayout] = useState("concentric");
+    const [layout, setLayout] = useState("circle");
+    const [activeLayout, setActiveLayout] = useState();
 
     const layouts = useMemo(()=> {
         return {
@@ -29,15 +30,23 @@ const LayoutControl = () => {
             nodeDimensionsIncludeLabels: true,
             //https://js.cytoscape.org/#layouts/breadthfirst
           },
-          circular: {
+          circle: {
             name: 'circle',
             nodeDimensionsIncludeLabels: true
             //https://js.cytoscape.org/#layouts/circle
           },
           'cola': {
             name: 'cola',
-            maxSimulationTime: 60000,
-            randomize: true,
+            nodeDimensionsIncludeLabels: true,
+            infinite: true,
+            edgeLength: (e) => {
+                let length = e.source().data("color") === e.target().data("color") ? 100 : 300;
+                return length;
+            },
+            convergenceThreshold: -1,
+            avoidOverlap: false,
+
+            //randomize: true,
             fit: false,
             //https://github.com/cytoscape/cytoscape.js-cola
           },
@@ -77,14 +86,22 @@ const LayoutControl = () => {
     // Layout on load ... needs work
     useEffect(async () => {
         cy && cy.on("add", ()=> {
-            cy.layout(layouts[layout]).run();
+            activeLayout && activeLayout.stop();
+            let lay = cy.layout(layouts[layout]);
+            setActiveLayout(lay);
+            lay.run();
         });
-    }, [cy]);
+    }, [cy, setActiveLayout]);
 
     // Update layout on change
     useEffect(async () => {
-        cy && cy.nodes().length && cy.layout(layouts[layout]).run();
-    }, [cy, layout]);
+        activeLayout && activeLayout.stop()
+        if (cy && cy.nodes().length) {
+            let lay = cy.layout(layouts[layout]);
+            setActiveLayout(lay);
+            lay.run();
+        }
+    }, [cy, layout, setActiveLayout]);
 
     return (
         <>

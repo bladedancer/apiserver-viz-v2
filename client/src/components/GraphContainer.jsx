@@ -71,7 +71,8 @@ function references(scopes, def) {
 }
 
 function color(index, domain) {
-    return chroma.scale(['yellow', 'navy']).mode('lch').colors(domain)[index];
+    return chroma(chroma.scale('Spectral').colors(domain)[index]).darken().hex();
+    //return chroma.scale(['yellow', 'navy']).mode('lch').colors(domain)[index];
 }
 
 function nodify(definitions) {
