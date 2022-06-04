@@ -11,7 +11,7 @@ const Graph = ({nodeData, children}) => {
             els.push({
                 data: {
                     id: n.id,
-                    label: n.kind,
+                    label: n.name ? `${n.name} (${n.kind})` : n.kind,
                     color: n.color,
                     linkType: n.refType,
                     groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id))

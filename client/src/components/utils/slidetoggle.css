@@ -1,0 +1,26 @@
+.slide-toggle {
+    position: relative;
+  }
+  
+  .slide-toggle input[type="radio"] {
+    display: none;
+  }
+  
+  .slide-toggle label {
+    display: inline-block;
+    transition: all 0.4s;
+    position: relative;
+    z-index: 3;
+    text-align: center;
+  }
+  
+  .slide-toggle .toggle {
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    transition: left 0.4s;
+    background-color: #7fa0e9;
+    border-radius: 40px;
+  }
+  
+  

@@ -109,3 +109,7 @@ body {
     width: 100%;
     border: none;
 }
+
+.source-control {
+    width: 200px;
+}
