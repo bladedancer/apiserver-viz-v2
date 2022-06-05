@@ -4,7 +4,12 @@ import { SettingsProvider } from "../hooks/useSettings.js";
 const GraphContainer = ({ children }) => {
   const [settings, setSettings] = useState({
       source: "definitions",
-      filter: ""
+      filter: "",
+      edges: {
+        scope: true,
+        hard: true,
+        soft: true
+      }
   });
   const context = useMemo(() => ({ settings, setSettings }), [settings]);
 

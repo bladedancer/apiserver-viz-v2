@@ -34,7 +34,8 @@ const Graph = ({nodeData, children}) => {
                         target: l.target,
                         sourceColor: n.color,
                         targetColor: targetNode.color,
-                        gradient: `${n.color} ${targetNode.color}`
+                        gradient: `${n.color} ${targetNode.color}`,
+                        type: l.refType
                     }
                 })
             });

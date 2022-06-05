@@ -114,21 +114,61 @@ body {
     width: 200px;
 }
 
+/**
+ * Filter
+ */
 .filter-control {
     border: 1px solid rgb(27, 27, 27);
     margin: 2vh 2px 2px 2px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding: 5px;
 }
 
-.filter-control label{
-    display: flex;
+/**
+ * Node Filter
+ */
+ .node-filter-control {
+     display: flex;
+     flex-direction: row;
+ }
+
+ .node-filter-control label{
     text-align: center;
 }
 
-.filter-control input {
-    display: flex;
-    width: 100%;
+.node-filter-control input {
     border:0;
     padding: 0 0 0 5px;
 }
+
+.edge-filter-control {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ * Checkbox
+ */
+ input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: 12px;
+    height: 12px;
+    margin: -1px 0px 0 0;
+    vertical-align: middle;
+    background: white left top no-repeat;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:checked + span {
+    background: #D9534F -19px top no-repeat;
+  }
+  
+  input[type="checkbox"] + span {
+    margin-right: 4px;
+  }

@@ -34,3 +34,19 @@ export function useSetFilter() {
         setFilter: (filter) => setSettings({...settings, filter})
     };
 }
+
+export function useSetEdgeFilter() {
+    const { settings, setSettings } = useSettingsContext();
+    const getEdgeFilter = useCallback(() => settings.edges, [settings]);
+
+    return {
+        edgeFilter: getEdgeFilter,
+        setEdgeFilter: (edgeFilter) => setSettings({
+            ...settings, 
+            edges: {
+                ...settings.edges,
+                ...edgeFilter
+            }
+        })
+    };
+}

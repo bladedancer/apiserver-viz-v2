@@ -5,7 +5,8 @@ import Graph from "./Graph.jsx";
 import { useSettingsContext } from "../hooks/useSettings.js";
 import ControlsContainer from "./controls/ControlsContainer.jsx";
 import LayoutControl from "./controls/LayoutControl.jsx";
-import SettingsControl from "./controls/SettingsControl.jsx";
+import SourceControl from "./controls/SourceControl.jsx";
+import FilterControl from "./controls/FilterControl.jsx";
 import ZoomControl from "./controls/ZoomControl.jsx";
 
 const LINK_TYPE_SCOPE = "scope";
@@ -292,7 +293,8 @@ const GraphSource = ({ children }) => {
     <>
       <Graph nodeData={nodeData}>{children}</Graph>
       <ControlsContainer position={"top-left"}>
-        <SettingsControl />
+        <SourceControl />
+        <FilterControl />
       </ControlsContainer>
       <ControlsContainer position={"bottom-right"}>
         <ZoomControl />
