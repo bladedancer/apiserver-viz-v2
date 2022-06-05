@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-
+  
 const Graph = ({nodeData, children}) => {
     const [elements, setElements] = useState([]);
 

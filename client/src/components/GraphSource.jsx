@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import chroma from "chroma-js";
 import { JSONPath } from "jsonpath-plus";
 import Graph from "./Graph.jsx";
-import { useSetSource, useSettingsContext } from "../hooks/useSettings.js";
+import { useSettingsContext } from "../hooks/useSettings.js";
 import ControlsContainer from "./controls/ControlsContainer.jsx";
 import LayoutControl from "./controls/LayoutControl.jsx";
 import SettingsControl from "./controls/SettingsControl.jsx";

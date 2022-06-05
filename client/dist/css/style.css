@@ -113,3 +113,22 @@ body {
 .source-control {
     width: 200px;
 }
+
+.filter-control {
+    border: 1px solid rgb(27, 27, 27);
+    margin: 2vh 2px 2px 2px;
+    display: flex;
+    flex-direction: row;
+}
+
+.filter-control label{
+    display: flex;
+    text-align: center;
+}
+
+.filter-control input {
+    display: flex;
+    width: 100%;
+    border:0;
+    padding: 0 0 0 5px;
+}

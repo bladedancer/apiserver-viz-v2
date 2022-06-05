@@ -24,3 +24,13 @@ export function useSetSource() {
         setSource: (source) => setSettings({...settings, source})
     };
 }
+
+export function useSetFilter() {
+    const { settings, setSettings } = useSettingsContext();
+    const getFilter = useCallback(() => settings.filter, [settings]);
+
+    return {
+        filter: getFilter,
+        setFilter: (filter) => setSettings({...settings, filter})
+    };
+}

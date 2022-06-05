@@ -3,7 +3,8 @@ import { SettingsProvider } from "../hooks/useSettings.js";
 
 const GraphContainer = ({ children }) => {
   const [settings, setSettings] = useState({
-      source: "definitions"
+      source: "definitions",
+      filter: ""
   });
   const context = useMemo(() => ({ settings, setSettings }), [settings]);
 
