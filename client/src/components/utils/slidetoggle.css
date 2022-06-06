@@ -1,5 +1,7 @@
 .slide-toggle {
     position: relative;
+    border: 1px solid black;
+    border-radius: 40px;
   }
   
   .slide-toggle input[type="radio"] {
@@ -8,7 +10,7 @@
   
   .slide-toggle label {
     display: inline-block;
-    transition: all 0.4s;
+    transition: all 0.8s;
     position: relative;
     z-index: 3;
     text-align: center;
@@ -18,8 +20,8 @@
     height: 100%;
     position: absolute;
     z-index: 2;
-    transition: left 0.4s;
-    background-color: #7fa0e9;
+    transition: left 0.8s;
+    background-color: #2196F3;
     border-radius: 40px;
   }
   

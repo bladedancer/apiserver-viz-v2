@@ -37,6 +37,7 @@ const LayoutControl = () => {
       breadthfirst: {
         name: "breadthfirst",
         circle: true,
+        avoidOverlap: true,
         nodeDimensionsIncludeLabels: true,
         //https://js.cytoscape.org/#layouts/breadthfirst
       },

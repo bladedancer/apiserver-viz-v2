@@ -14,11 +14,13 @@ const Graph = ({nodeData, children}) => {
                     label: n.name ? `${n.name} (${n.kind})` : n.kind,
                     color: n.color,
                     linkType: n.refType,
+                    root: n.isScope,
                     groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
                     //parent: n.isScope ? '' : n.scope.id,
                 }
             });
         });
+        console.log(els);
         nodeData.nodes.forEach(n => {
             n.links.forEach(l => {
                 // if (!n.isScope && (l.target === n.scope.id)) {
@@ -50,8 +52,9 @@ const Graph = ({nodeData, children}) => {
                 "background-color": "data(color)",
                 width: "label",
                 height: "label",
-                padding: "6px",
-                shape: "round-rectangle"
+                padding: "8px",
+                shape: "round-rectangle",
+                'min-zoomed-font-size': 8,
             }
         },
         {

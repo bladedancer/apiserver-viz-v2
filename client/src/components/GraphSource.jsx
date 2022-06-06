@@ -8,6 +8,7 @@ import LayoutControl from "./controls/LayoutControl.jsx";
 import SourceControl from "./controls/SourceControl.jsx";
 import FilterControl from "./controls/FilterControl.jsx";
 import ZoomControl from "./controls/ZoomControl.jsx";
+import ExportControl from "./controls/ExportControl.jsx";
 
 const LINK_TYPE_SCOPE = "scope";
 const LINK_TYPE_HARD = "hard";
@@ -295,6 +296,7 @@ const GraphSource = ({ children }) => {
       <ControlsContainer position={"top-left"}>
         <SourceControl />
         <FilterControl />
+        <ExportControl />
       </ControlsContainer>
       <ControlsContainer position={"bottom-right"}>
         <ZoomControl />
