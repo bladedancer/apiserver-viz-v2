@@ -25,13 +25,19 @@ export function useSetSource() {
     };
 }
 
-export function useSetFilter() {
+export function useSetNodeFilter() {
     const { settings, setSettings } = useSettingsContext();
-    const getFilter = useCallback(() => settings.filter, [settings]);
+    const getNodeFilter = useCallback(() => settings.nodes, [settings]);
 
     return {
-        filter: getFilter,
-        setFilter: (filter) => setSettings({...settings, filter})
+        nodeFilter: getNodeFilter,
+        setNodeFilter: (nodeFilter) => setSettings({
+            ...settings, 
+            nodes: { 
+                ...settings.nodes, 
+                ...nodeFilter
+            }
+        })
     };
 }
 

@@ -4,7 +4,10 @@ import { SettingsProvider } from "../hooks/useSettings.js";
 const GraphContainer = ({ children }) => {
   const [settings, setSettings] = useState({
       source: "definitions",
-      filter: "",
+      nodes: {
+        filter: "",
+        connected: false
+      },
       edges: {
         scope: true,
         hard: true,

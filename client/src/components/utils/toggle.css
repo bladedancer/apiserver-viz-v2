@@ -56,4 +56,5 @@
 .switch .content {
     position: absolute;
     left: 34px;
+    white-space: nowrap;
 }

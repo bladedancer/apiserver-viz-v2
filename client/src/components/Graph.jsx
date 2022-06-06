@@ -14,7 +14,7 @@ const Graph = ({nodeData, children}) => {
                     label: n.name ? `${n.name} (${n.kind})` : n.kind,
                     color: n.color,
                     linkType: n.refType,
-                    groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id))
+                    groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
                     //parent: n.isScope ? '' : n.scope.id,
                 }
             });
