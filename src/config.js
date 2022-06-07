@@ -12,7 +12,10 @@ const STORE_PATH = process.env.STORE_PATH || './store';
 const USE_STORE = process.env.USE_STORE ? process.env.USE_STORE.toLowerCase() === 'true' : false;
 
 const PLATFORM_CONFIG = new Config();
-process.env.PLATFORM_ENV && PLATFORM_CONFIG.set("env", process.env.PLATFORM_ENV)
+process.env.PLATFORM_ENV && PLATFORM_CONFIG.set("env", process.env.PLATFORM_ENV);
+PLATFORM_CONFIG.set("auth.tokenStoreType", process.env.PLATFORM_AUTH_TOKEN_STORE_TYPE || "file");
+
+
 
 export default {
     PORT,
