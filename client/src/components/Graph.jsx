@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-  
+
 const Graph = ({nodeData, children}) => {
     const [elements, setElements] = useState([]);
 
@@ -55,6 +55,14 @@ const Graph = ({nodeData, children}) => {
                 padding: "8px",
                 shape: "round-rectangle",
                 'min-zoomed-font-size': 8,
+            }
+        },
+        {
+            selector: ':selected',
+            css: {
+                'underlay-color': '#00ffff',
+                'underlay-padding': '5px',
+                'underlay-opacity': '0.5'
             }
         },
         {

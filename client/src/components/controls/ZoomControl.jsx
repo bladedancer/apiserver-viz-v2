@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import ZoomInIcon from "../../assets/icons/plus.svg";
 import ZoomOutIcon from "../../assets/icons/minus.svg";
 import ZoomResetIcon from "../../assets/icons/dot-circle.svg";
+import ZoomSelectIcon from "../../assets/icons/zoom-select.svg";
 import { useCy } from "../../hooks/useCy";
 
 /**
@@ -68,7 +69,17 @@ const ZoomControl = ({
   const fit = useCallback(() => {
     cy.animate({
       fit: {
-        else: cy.nodes()
+        eles: cy.nodes()
+      }
+    }, {
+      duration
+    });
+  }, [cy]);
+
+  const fitsel = useCallback(() => {
+    cy.animate({
+      fit: {
+        eles: cy.nodes(":selected")
       }
     }, {
       duration
@@ -88,8 +99,13 @@ const ZoomControl = ({
         </button>
       </div>
       <div {...htmlProps}>
+        <button onClick={fitsel} title="Zoom to selection">
+          {children ? children[3] : <ZoomSelectIcon style={{ width: "1em" }} />}
+        </button>
+      </div>
+      <div {...htmlProps}>
         <button onClick={fit} title="See whole graph">
-          {children ? children[2] : <ZoomResetIcon style={{ width: "1em" }} />}
+          {children ? children[4] : <ZoomResetIcon style={{ width: "1em" }} />}
         </button>
       </div>
     </>
