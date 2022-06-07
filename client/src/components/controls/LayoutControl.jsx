@@ -6,7 +6,13 @@ import COSEBilkent from "cytoscape-cose-bilkent";
 import avsdf from "cytoscape-avsdf";
 import fcose from "cytoscape-fcose";
 import cola from "cytoscape-cola";
+import cise from 'cytoscape-cise';
+import klay from 'cytoscape-klay';
+import euler from 'cytoscape-euler';
 
+Cytoscape.use( euler );
+Cytoscape.use( klay );
+Cytoscape.use(cise);
 Cytoscape.use(cola);
 Cytoscape.use(fcose);
 Cytoscape.use(avsdf);
@@ -73,6 +79,14 @@ const LayoutControl = () => {
         },
         // todo: https://js.cytoscape.org/#layouts/concentric
       },
+      cise: {
+        name: "cise",
+        clusters: (n) => n.data("groupId"),
+        allowNodesInsideCircle: true,
+        idealInterClusterEdgeLengthCoefficient: 10,
+        fit: false
+        // https://github.com/iVis-at-Bilkent/cytoscape.js-cise
+      },
       cose: {
         name: "cose",
         nodeDimensionsIncludeLabels: true,
@@ -87,6 +101,33 @@ const LayoutControl = () => {
         edgeElasticity: 0.1,
         nodeRepulsion: 8500,
       },
+      // "d3-force": {
+      //   name: "d3-force",
+      //   link: (d) => d.data("id")
+
+
+      //   // https://github.com/shichuanpo/cytoscape.js-d3-force
+      // },
+      euler: {
+        name: "euler",
+        springLength: e => {
+          let type = e.data("type");
+          if (e.type === "scope") {
+            return 150;
+          } else {
+            return 300;
+          }
+        },
+        mass: n => n.data("isScope") ? 20 : 4,
+        movementThreshold: 0.1,
+        maxIterations:  50000,
+        fit: false,
+        maxSimulationTime: 30000,
+        gravity: -4,
+        pull: 0.0005,
+
+        // https://github.com/cytoscape/cytoscape.js-euler
+      },
       fcose: {
         name: "fcose",
         nodeDimensionsIncludeLabels: true,
@@ -94,6 +135,19 @@ const LayoutControl = () => {
       },
       grid: {
         name: "grid",
+      },
+      klay: {
+        name: "klay",
+        nodeDimensionsIncludeLabels: true,
+        fit: false,
+        klay: {
+          compactComponents: true,
+          nodeLayering: "NETWORK_SIMPLEX",
+          thoroughness: 20,
+          fixedAlignment: "BALANCED"
+
+        }
+        //https://github.com/cytoscape/cytoscape.js-klay/blob/master/README.md
       },
       random: {
         name: "random",
