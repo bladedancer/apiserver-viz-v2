@@ -17,13 +17,7 @@ const FilterControl = () => {
       let ef = edgeFilter();
 
       cy.nodes().forEach((n) => {
-        if (
-          !nf.filter ||
-          n
-            .data("label")
-            .toLowerCase()
-            .match(nf.filter.toLowerCase() + ".*")
-        ) {
+        if (!nf.filter || n.data("label").toLowerCase().match(nf.filter.toLowerCase() + ".*")) {
           n.show();
         } else {
           n.hide();
@@ -32,12 +26,34 @@ const FilterControl = () => {
 
       // This will leave nodes disconnected because edge filtering happens after this. Todo - successors/predecessors reachable by enabled edge types.
       if (nf.filter && nf.connected) {
-        cy.elements(":visible")
-          .predecessors()
-          .forEach((n) => n.show());
-        cy.elements(":visible")
-          .successors()
-          .forEach((n) => n.show());
+        cy.nodes(":visible").forEach(root => {
+          let nodes = cy.collection();
+          nodes.merge(root.predecessors());
+          nodes.merge(root.successors());
+          nodes.merge(root);
+          
+          nodes.forEach(goal => {
+            let path = nodes.aStar({
+              root,
+              goal,
+              weight: (e) => { 
+                let type = e.data("type");
+                if ((type == "scope" && ef.scope)
+                    || (type == "hard" && ef.hard)
+                    || (type == "soft" && ef.soft))  {
+                  // Along an enabled edge
+                  return 1;
+                } else {
+                  return 10000000;
+                }
+              }
+            });
+            
+            if (path.distance && path.distance < 10000000) {
+              goal.show();
+            }
+          });
+        });
       }
 
       cy.edges().forEach((e) => {
@@ -64,7 +80,7 @@ const FilterControl = () => {
               name="filter"
               placeholder="Filter displayed resources"
               value={nodeFilter().filter}
-              onChange={ (e) => setNodeFilter({ filter: e.target.value })} // Need to debounce this
+              onChange={ (e) => setNodeFilter({ filter: e.target.value, connected: false })} // Need to debounce this
             />
           </label>
         </div>

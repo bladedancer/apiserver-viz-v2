@@ -58,7 +58,7 @@ const LayoutControl = () => {
           return length;
         },
         convergenceThreshold: -1,
-        avoidOverlap: true,
+        avoidOverlap: false,
 
         //randomize: true,
         fit: false,

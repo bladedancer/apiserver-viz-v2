@@ -20,7 +20,6 @@ const Graph = ({nodeData, children}) => {
                 }
             });
         });
-        console.log(els);
         nodeData.nodes.forEach(n => {
             n.links.forEach(l => {
                 // if (!n.isScope && (l.target === n.scope.id)) {
