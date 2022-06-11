@@ -1,27 +1,32 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useCy } from "../../hooks/useCy.js";
+import { saveAs } from 'file-saver';
+import { FaSpinner, FaDownload } from "react-icons/fa";
 
 
 const ExportControl = () => {
+    const [ busy, setBusy ] = useState(false);
     const cy = useCy();
 
-    const exportCy = useCallback(() => {
-        let data = cy.png({
-            bg: 'white',
+    const exportCy = useCallback(async () => {
+        setBusy(true);
+        let img = await cy.png({
+            //bg: 'white',
             full: true,
-            scale: 1      
+            scale: 1,
+            output: 'blob-promise'      
         });
-        let w = window.open('about:blank');
-        let image = new Image();
-        image.src = data;
-        setTimeout(function(){
-        w.document.write(image.outerHTML);
-        }, 0);
-    });
+        saveAs(img, "graph.png");
+        setBusy(false);
+    }, [cy, setBusy]);
 
     return (
         <>
-            <button onClick={exportCy}>Export PNG</button>
+            <button onClick={exportCy} disabled={busy}>
+                {busy && <FaSpinner/>}
+                {!busy && <FaDownload/>}
+                Export PNG
+            </button>
         </>
     )
 }
