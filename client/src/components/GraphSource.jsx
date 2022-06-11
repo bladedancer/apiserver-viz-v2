@@ -9,6 +9,7 @@ import SourceControl from "./controls/SourceControl.jsx";
 import FilterControl from "./controls/FilterControl.jsx";
 import ZoomControl from "./controls/ZoomControl.jsx";
 import ExportControl from "./controls/ExportControl.jsx";
+import SummaryControl from "./controls/SummaryControl.jsx";
 
 const LINK_TYPE_SCOPE = "scope";
 const LINK_TYPE_HARD = "hard";
@@ -84,14 +85,15 @@ function color(index, domain) {
 
 function nodify(graph, source) {
   let data = {
+    source,
     nodes: [],
     scopes: [],
   };
 
   if (source === "definitions") {
-    data = nodifyDefinitions(graph.definitions);
+    data = {...data, ...nodifyDefinitions(graph.definitions)};
   } else if (source === "instances") {
-    data = nodifyInstances(graph.instances);
+    data = {...data, ...nodifyInstances(graph.instances)};
   }
 
   return data;
@@ -294,6 +296,9 @@ const GraphSource = ({ children }) => {
   return (
     <>
       <Graph nodeData={nodeData}>{children}</Graph>
+      <ControlsContainer position={"top-right"}>
+        <SummaryControl resources={graphState} nodeData={nodeData} />
+      </ControlsContainer>
       <ControlsContainer position={"top-left"}>
         <SourceControl />
         <FilterControl />
