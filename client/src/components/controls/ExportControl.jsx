@@ -6,7 +6,11 @@ const ExportControl = () => {
     const cy = useCy();
 
     const exportCy = useCallback(() => {
-        let data = cy.png();
+        let data = cy.png({
+            bg: 'white',
+            full: true,
+            scale: 1      
+        });
         let w = window.open('about:blank');
         let image = new Image();
         image.src = data;

@@ -77,6 +77,7 @@ function references(scopes, def) {
 }
 
 function color(index, domain) {
+  //return chroma.cubehelix().lightness([0.3,0.7]).scale().colors(domain)[index];
   return chroma(chroma.scale("Spectral").colors(domain)[index]).darken().hex();
   //return chroma.scale(['yellow', 'navy']).mode('lch').colors(domain)[index];
 }
@@ -288,7 +289,7 @@ const GraphSource = ({ children }) => {
   // Nodify
   useEffect(async () => {
     setNodeData(nodify(graphState, settings.source));
-  }, [graphState, setNodeData, settings]);
+  }, [graphState, setNodeData, settings.source]);
 
   return (
     <>

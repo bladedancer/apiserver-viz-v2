@@ -15,6 +15,16 @@ export function useSettingsContext() {
     return context;
 }
 
+export function useSetContentModifiedTS() {
+    const { settings, setSettings } = useSettingsContext();
+    const get = useCallback(() => settings.contentModifiedTS, [settings]);
+
+    return {
+        contentModifiedTS: get,
+        setContentModifiedTS: (contentModifiedTS) => setSettings({...settings, contentModifiedTS})
+    };
+}
+
 export function useSetSource() {
     const { settings, setSettings } = useSettingsContext();
     const getSource = useCallback(() => settings.source, [settings]);

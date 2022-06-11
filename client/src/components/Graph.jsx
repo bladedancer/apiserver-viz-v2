@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+import { useSetContentModifiedTS } from "../hooks/useSettings.js";
 
 const Graph = ({nodeData, children}) => {
     const [elements, setElements] = useState([]);
+    const {contentModifiedTS, setContentModifiedTS} = useSetContentModifiedTS();
 
     // Convert to elements
-    useEffect(async () => {
+    useEffect(() => {
         let els = [];
         nodeData.nodes.forEach(n => {
             els.push({
@@ -16,17 +18,11 @@ const Graph = ({nodeData, children}) => {
                     linkType: n.refType,
                     root: n.isScope,
                     groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
-                    //parent: n.isScope ? '' : n.scope.id,
                 }
             });
         });
         nodeData.nodes.forEach(n => {
             n.links.forEach(l => {
-                // if (!n.isScope && (l.target === n.scope.id)) {
-                //     // No scope links
-                //     return;
-                // }
-
                 const targetNode = nodeData.nodes.find(tn => tn.id === l.target);
                 els.push({
                     data: {
@@ -43,6 +39,10 @@ const Graph = ({nodeData, children}) => {
         });
         setElements(els);
     }, [nodeData]);
+
+    useLayoutEffect(() => {
+        setContentModifiedTS(Date.now());
+    }, [elements])
 
     const cytoscapeStylesheet = [
         {
