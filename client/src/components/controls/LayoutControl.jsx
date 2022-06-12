@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { FaProjectDiagram, FaPlay } from "react-icons/fa";
+import { FaProjectDiagram, FaPlay, FaStop } from "react-icons/fa";
 import { useCy } from "../../hooks/useCy";
 import { useSetContentModifiedTS } from "../../hooks/useSettings.js";
 import Cytoscape from "cytoscape";
@@ -173,23 +173,47 @@ const LayoutControl = () => {
     };
   });
 
+  const runLayout = useCallback(async () => {
+    if (activeLayout) {
+      activeLayout.stop();
+      await activeLayout.pon("layoutstop"); // Think there's a race wiith the disable effect.
+    }
+
+    let lay = cy.elements(":visible").layout(layouts[layout]);
+    if (lay.options.animate) {
+      setActiveLayout(lay);
+    } else {
+      setActiveLayout(null);
+    }
+    lay.run();
+  }, [cy, layout, activeLayout, setActiveLayout]);
+
+  const stopLayout = useCallback(() => {
+    activeLayout && activeLayout.stop();
+    setActiveLayout(null);
+  }, [cy, activeLayout, setActiveLayout]);
+
+  
   // Update layout on change
   useEffect(async () => {
     if (!cy) {
       return;
     }
-    activeLayout && activeLayout.stop();
-    let lay = cy.elements(":visible").layout(layouts[layout]);
-    setActiveLayout(lay);
-    lay.run();
-  }, [cy, contentModifiedTS(), layout, setActiveLayout]);
+    console.log("fire")
+    await stopLayout();
+    await runLayout()
+  }, [cy, contentModifiedTS(), layout]);
 
-  const runLayout = useCallback(() => {
-    activeLayout && activeLayout.stop();
-    let lay = cy.elements(":visible").layout(layouts[layout]);
-    setActiveLayout(lay);
-    lay.run();
-  }, [cy, layout, activeLayout]);
+  // Disable stop button when layout auto-stops
+  useEffect(async () => {
+    if (!activeLayout) {
+      return;
+    }
+    await activeLayout.pon("layoutstop");
+    activeLayout.stop(); // Explicitly stop it anyway
+    setActiveLayout(null);
+  }, [activeLayout, setActiveLayout]);
+
 
   return (
     <>
@@ -234,10 +258,16 @@ const LayoutControl = () => {
           )}
         </div>
         <div className="react-sigma-control">
-          <button onClick={() => runLayout()} title="Re-run layout">
+          <button onClick={() => runLayout()} title="Re-run layout" disabled={activeLayout}>
             <FaPlay />
           </button>
         </div>
+        <div className="react-sigma-control">
+          <button onClick={() => stopLayout()} title="Stop layout" disabled={!activeLayout || !activeLayout.options.animate}>
+            <FaStop />
+          </button>
+        </div>
+
       </div>
     </>
   );
