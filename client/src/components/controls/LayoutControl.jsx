@@ -75,7 +75,7 @@ const LayoutControl = () => {
       },
       cise: {
         name: "cise",
-        clusters: (n) => n.data("groupId"),
+        clusters: (n) => n.data("groupIndex"),
         allowNodesInsideCircle: true,
         idealInterClusterEdgeLengthCoefficient: 10,
         animate: true,
@@ -96,7 +96,7 @@ const LayoutControl = () => {
         edgeElasticity: 0.1,
         nodeRepulsion: 8500,
         quality: 'proof',
-        animate: 'during',                
+        animate: 'during',
         //https://github.com/cytoscape/cytoscape.js-cose-bilkent
       },
       // "d3-force": {
@@ -193,13 +193,12 @@ const LayoutControl = () => {
     setActiveLayout(null);
   }, [cy, activeLayout, setActiveLayout]);
 
-  
+
   // Update layout on change
   useEffect(async () => {
     if (!cy) {
       return;
     }
-    console.log("fire")
     await stopLayout();
     await runLayout()
   }, [cy, contentModifiedTS(), layout]);

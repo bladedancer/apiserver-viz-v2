@@ -17,7 +17,8 @@ const Graph = ({nodeData, children}) => {
                     color: n.color,
                     linkType: n.refType,
                     root: n.isScope,
-                    groupId: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
+                    groupIndex: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
+                    groupId: nodeData.scopes.find(s => s.id === (n.isScope ? n.id : n.scope.id)).id,
                 }
             });
         });

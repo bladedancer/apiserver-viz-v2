@@ -1,5 +1,23 @@
 
 .summary-control {
-    max-height: 200px;
-    overflow-y: scroll;
+}
+
+.summary-control .searchWrapper {
+    max-width: 500px;
+}
+
+.summary-control .searchBox {
+	border: none;
+    display: block;
+}
+
+.summary-control .chip {
+	background-color: #2196F3;
+}
+
+.summary-control .definitions .scope-title {
+    border-radius: 3px 3px;
+    padding: 6px 2px;
+    margin: 2px;
+    display: block;
 }

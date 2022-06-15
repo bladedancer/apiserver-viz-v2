@@ -17,26 +17,28 @@ const FilterControl = () => {
       let ef = edgeFilter();
 
       cy.nodes().forEach((n) => {
-        if (!nf.filter || n.data("label").toLowerCase().match(nf.filter.toLowerCase() + ".*")) {
+        // Ids take precedence
+        if (nf.ids && nf.ids.length && !nf.ids.includes(n.id())) {
+          n.hide();
+        } else if (!nf.filter || n.data("label").toLowerCase().match(nf.filter.toLowerCase() + ".*")) {
           n.show();
         } else {
           n.hide();
         }
       });
 
-      // This will leave nodes disconnected because edge filtering happens after this. Todo - successors/predecessors reachable by enabled edge types.
-      if (nf.filter && nf.connected) {
+      if ((nf.filter || nf.ids) && nf.connected) {
         cy.nodes(":visible").forEach(root => {
           let nodes = cy.collection();
           nodes.merge(root.predecessors());
           nodes.merge(root.successors());
           nodes.merge(root);
-          
+
           nodes.forEach(goal => {
             let path = nodes.aStar({
               root,
               goal,
-              weight: (e) => { 
+              weight: (e) => {
                 let type = e.data("type");
                 if ((type == "scope" && ef.scope)
                     || (type == "hard" && ef.hard)
@@ -48,7 +50,7 @@ const FilterControl = () => {
                 }
               }
             });
-            
+
             if (path.distance && path.distance < 10000000) {
               goal.show();
             }
