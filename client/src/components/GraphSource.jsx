@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import chroma from "chroma-js";
 import { JSONPath } from "jsonpath-plus";
 import Graph from "./Graph.jsx";
-import { useSettingsContext } from "../hooks/useSettings.js";
+import { useSettingsContext, useSetSourceRefresh } from "../hooks/useSettings.js";
 import ControlsContainer from "./controls/ControlsContainer.jsx";
 import LayoutControl from "./controls/LayoutControl.jsx";
 import SourceControl from "./controls/SourceControl.jsx";
@@ -266,6 +266,7 @@ function nodifyInstances(instances) {
 
 const GraphSource = ({ children }) => {
   const { settings, setSettings } = useSettingsContext();
+  const { setSourceRefreshBusy } = useSetSourceRefresh();
 
   const [graphState, setGraphState] = useState({
     instances: {},
@@ -307,7 +308,8 @@ const GraphSource = ({ children }) => {
         instances: models
       })
     }
-  }, [settings.sourceRefresh, setGraphState]);
+    setSourceRefreshBusy(false);
+  }, [settings.sourceRefresh && settings.sourceRefresh.ts, setGraphState]);
 
   // Nodify
   useEffect(async () => {

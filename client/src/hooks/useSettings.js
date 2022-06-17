@@ -31,7 +31,13 @@ export function useSetSourceRefresh() {
 
     return {
         sourceRefresh: get,
-        setSourceRefresh: (sourceRefresh) => setSettings({...settings, sourceRefresh: { ...sourceRefresh, ts: Date.now() }})
+        setSourceRefresh: (sourceRefresh) => setSettings({...settings, sourceRefresh: { ...sourceRefresh, busy: true, ts: Date.now() }}),
+        setSourceRefreshBusy: (busy) => setSettings({
+            ...settings,
+            sourceRefresh: {
+                ...settings.sourceRefresh,
+                busy
+            }}),
     };
 }
 

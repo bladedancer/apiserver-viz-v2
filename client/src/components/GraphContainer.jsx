@@ -5,6 +5,11 @@ const GraphContainer = ({ children }) => {
   const [settings, setSettings] = useState({
       contentModifiedTS: 0,
       source: "definitions",
+      sourceRefresh: {
+        busy: false,
+        source: "",
+        ts: 0
+      },
       nodes: {
         filter: "",
         connected: false

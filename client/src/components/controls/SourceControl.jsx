@@ -24,8 +24,8 @@ const SourceControl = () => {
             },
           ]}
         />
-        <button className="refresh" title="Refresh" onClick={()=>{setSourceRefresh({ source: source() })}}>
-          <MdRefresh />
+        <button className="refresh" title="Refresh" onClick={()=>{setSourceRefresh({ source: source() })}} disabled={sourceRefresh().busy}>
+          <MdRefresh className={sourceRefresh().busy ? "busy" : ""}/>
         </button>
       </div>
     </>
