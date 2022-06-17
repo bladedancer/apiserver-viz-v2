@@ -1,9 +1,12 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-import { useSetContentModifiedTS } from "../hooks/useSettings.js";
+import { useSetSelection, useSetContentModifiedTS } from "../hooks/useSettings.js";
+import { useCy } from "../hooks/useCy";
 
 const Graph = ({nodeData, children}) => {
     const [elements, setElements] = useState([]);
+    const { selection, setSelection } = useSetSelection();
+    const cy = useCy();
     const {contentModifiedTS, setContentModifiedTS} = useSetContentModifiedTS();
 
     // Convert to elements
@@ -114,14 +117,24 @@ const Graph = ({nodeData, children}) => {
         }
     ]
 
+    useEffect(() => {
+        if (!cy) {
+            return;
+        }
+        cy.on("select", () => {
+            setSelection(cy.nodes().filter(":selected"));
+        });
+        cy.on("unselect", () => {
+            setSelection(cy.nodes().filter(":selected"));
+        });
+        cy.on("boxselect", () => {
+            setSelection(cy.nodes().filter(":selected"));
+        });
+    }, [cy])
+
     return (
         <CytoscapeComponent
             global='cy'
-            cy={(cy) => {
-                cy.on("select", (_x) => {
-                    console.log("something was selected here");
-                });
-            }}
             elements={elements}
             style={{ top: 0, bottom: 0, position: "absolute", width: "100%" }}
             stylesheet={cytoscapeStylesheet}

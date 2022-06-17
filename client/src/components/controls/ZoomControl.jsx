@@ -1,10 +1,8 @@
 import React, { useCallback } from "react";
 
-import ZoomInIcon from "../../assets/icons/plus.svg";
-import ZoomOutIcon from "../../assets/icons/minus.svg";
-import ZoomResetIcon from "../../assets/icons/dot-circle.svg";
-import ZoomSelectIcon from "../../assets/icons/zoom-select.svg";
+import { FiZoomIn, FiZoomOut, FiCrosshair, FiMaximize } from "react-icons/fi";
 import { useCy } from "../../hooks/useCy";
+import { useSetSelection } from "../../hooks/useSettings.js";
 
 /**
  * The `ZoomControl` create three UI buttons that allows the user to
@@ -29,6 +27,7 @@ const ZoomControl = ({
   children,
 }) => {
   const cy = useCy();
+  const { selection } = useSetSelection();
 
   duration = duration || 200;
 
@@ -90,22 +89,22 @@ const ZoomControl = ({
     <>
       <div {...htmlProps}>
         <button onClick={zoomIn} title="Zoom In">
-          {children ? children[0] : <ZoomInIcon style={{ width: "1em" }} />}
+          {children ? children[0] : <FiZoomIn style={{ width: "1em" }} />}
         </button>
       </div>
       <div {...htmlProps}>
         <button onClick={zoomOut} title="Zoom Out">
-          {children ? children[1] : <ZoomOutIcon style={{ width: "1em" }} />}
+          {children ? children[1] : <FiZoomOut style={{ width: "1em" }} />}
         </button>
       </div>
       <div {...htmlProps}>
-        <button onClick={fitsel} title="Zoom to selection">
-          {children ? children[3] : <ZoomSelectIcon style={{ width: "1em" }} />}
+        <button onClick={fitsel} title="Zoom to selection" disabled={selection().length === 0}>
+          {children ? children[3] : <FiCrosshair style={{ width: "1em" }} />}
         </button>
       </div>
       <div {...htmlProps}>
         <button onClick={fit} title="See whole graph">
-          {children ? children[4] : <ZoomResetIcon style={{ width: "1em" }} />}
+          {children ? children[4] : <FiMaximize style={{ width: "1em" }} />}
         </button>
       </div>
     </>

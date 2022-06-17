@@ -15,6 +15,16 @@ export function useSettingsContext() {
     return context;
 }
 
+export function useSetSelection() {
+    const { settings, setSettings } = useSettingsContext();
+    const get = useCallback(() => settings.selection, [settings]);
+
+    return {
+        selection: get,
+        setSelection: (selection) => setSettings({...settings, selection})
+    };
+}
+
 export function useSetContentModifiedTS() {
     const { settings, setSettings } = useSettingsContext();
     const get = useCallback(() => settings.contentModifiedTS, [settings]);

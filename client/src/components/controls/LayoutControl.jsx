@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { FaProjectDiagram, FaPlay, FaStop } from "react-icons/fa";
+import { FiGrid, FiPlay, FiPause } from "react-icons/fi";
 import { useCy } from "../../hooks/useCy";
 import { useSetContentModifiedTS } from "../../hooks/useSettings.js";
 import Cytoscape from "cytoscape";
@@ -227,7 +227,7 @@ const LayoutControl = ({
     <>
       <div {...htmlProps}>
         <button onClick={() => setOpened((e) => !e)} title="Select layout">
-          <FaProjectDiagram />
+          <FiGrid />
         </button>
         {opened === true && (
           <ul
@@ -265,12 +265,12 @@ const LayoutControl = ({
       </div>
       <div {...htmlProps}>
         <button onClick={() => runLayout()} title="Re-run layout" disabled={activeLayout}>
-          <FaPlay />
+          <FiPlay />
         </button>
       </div>
       <div {...htmlProps}>
         <button onClick={() => stopLayout()} title="Stop layout" disabled={!activeLayout || !activeLayout.options.animate}>
-          <FaStop />
+          <FiPause />
         </button>
       </div>
     </>
