@@ -22,11 +22,13 @@ const ExportControl = () => {
 
     return (
         <>
-            <button onClick={exportCy} disabled={busy}>
-                {busy && <FaSpinner/>}
-                {!busy && <FaDownload/>}
-                Export PNG
-            </button>
+            <div className="react-cy-control export-control">
+                <button onClick={exportCy} disabled={busy}>
+                    {busy && <FaSpinner/>}
+                    {!busy && <FaDownload/>}
+                    Export PNG
+                </button>
+            </div>
         </>
     )
 }

@@ -73,7 +73,7 @@ const FilterControl = () => {
 
   return (
     <>
-      <div className="react-sigma-control filter-control">
+      <div className="filter-control">
         <div className="node-filter-control">
           <label>
             Filter:

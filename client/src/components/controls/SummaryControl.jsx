@@ -60,7 +60,7 @@ const InstancesSummaryControl = ({ resources, nodeData }) => {
 const SummaryControl = ({ resources, nodeData }) => {
     return (
        <>
-        <div className="react-sigma-control summary-control">
+        <div className="summary-control">
             {nodeData.source === "definitions" && <DefinitionsSummaryControl nodeData={nodeData} />}
             {nodeData.source === "instances" && <InstancesSummaryControl  resources={resources} nodeData={nodeData} />}
         </div>

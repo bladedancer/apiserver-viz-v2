@@ -63,7 +63,7 @@ body {
 }
 
 /**
-   * Sigma control button
+   * Cy control button
    */
 .react-cy-control {
     width: var(--cy-controls-size);
@@ -143,11 +143,27 @@ body {
  * Filter
  */
 .filter-control {
-    border: 1px solid rgb(27, 27, 27);
+    border: none;
     margin: 2vh 2px 2px 2px;
     display: flex;
     flex-direction: column;
     padding: 5px;
+}
+
+/**
+ * Export
+ */
+.export-control {
+    border: none;
+    width: 100%
+}
+
+.export-control button {
+    width: 100%
+}
+
+.export-control svg {
+    margin-right: 5px;
 }
 
 /**

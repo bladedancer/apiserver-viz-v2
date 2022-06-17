@@ -8,7 +8,7 @@ const SourceControl = () => {
   const { sourceRefresh, setSourceRefresh } = useSetSourceRefresh()
   return (
     <>
-      <div className="react-sigma-control source-control">
+      <div className="react-cy-control source-control">
         <SlideToggle
           className="source-toggle"
           selected={source()}
