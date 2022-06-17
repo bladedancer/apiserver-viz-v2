@@ -21,7 +21,7 @@ const SlideToggle = (props) => {
   };
 
   return (
-    <div className={`slide-toggle ${(className || '')}`}>
+    <span className={`slide-toggle ${(className || '')}`}>
       <span
         className={`toggle ${(toggleClassName || '')}`}
         style={{
@@ -50,7 +50,7 @@ const SlideToggle = (props) => {
           </label>
         </span>
       ))}
-    </div>
+    </span>
   );
 };
 

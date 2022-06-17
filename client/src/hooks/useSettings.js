@@ -25,6 +25,17 @@ export function useSetContentModifiedTS() {
     };
 }
 
+export function useSetSourceRefresh() {
+    const { settings, setSettings } = useSettingsContext();
+    const get = useCallback(() => settings.sourceRefresh, [settings]);
+
+    return {
+        sourceRefresh: get,
+        setSourceRefresh: (sourceRefresh) => setSettings({...settings, sourceRefresh: { ...sourceRefresh, ts: Date.now() }})
+    };
+}
+
+
 export function useSetSource() {
     const { settings, setSettings } = useSettingsContext();
     const getSource = useCallback(() => settings.source, [settings]);
@@ -42,9 +53,9 @@ export function useSetNodeFilter() {
     return {
         nodeFilter: getNodeFilter,
         setNodeFilter: (nodeFilter) => setSettings({
-            ...settings, 
-            nodes: { 
-                ...settings.nodes, 
+            ...settings,
+            nodes: {
+                ...settings.nodes,
                 ...nodeFilter
             }
         })
@@ -58,7 +69,7 @@ export function useSetEdgeFilter() {
     return {
         edgeFilter: getEdgeFilter,
         setEdgeFilter: (edgeFilter) => setSettings({
-            ...settings, 
+            ...settings,
             edges: {
                 ...settings.edges,
                 ...edgeFilter

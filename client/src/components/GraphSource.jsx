@@ -288,6 +288,27 @@ const GraphSource = ({ children }) => {
     });
   }, [setGraphState]);
 
+  // Refresh
+  useEffect(async () => {
+    if (!settings.sourceRefresh) {
+      return;
+    }
+
+    if (settings.sourceRefresh.source === 'definitions') {
+      let models = await fetch("/api/definitions/refresh").then((resp) => resp.json());
+      setGraphState({
+        ...graphState,
+        definitions: models
+      })
+    } else if (settings.sourceRefresh.source === 'instances') {
+      let models = await fetch("/api/instances/refresh").then((resp) => resp.json());
+      setGraphState({
+        ...graphState,
+        instances: models
+      })
+    }
+  }, [settings.sourceRefresh, setGraphState]);
+
   // Nodify
   useEffect(async () => {
     setNodeData(nodify(graphState, settings.source));

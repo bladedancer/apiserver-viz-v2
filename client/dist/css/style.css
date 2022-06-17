@@ -112,7 +112,17 @@ body {
 }
 
 .source-control {
+    width: 260px;
+    display: flex;
+    padding: 10px 5px 5px 5px;
+}
+
+.source-toggle {
     width: 200px;
+}
+
+.source-control .refresh {
+    margin-left: 10px;
 }
 
 /**
@@ -169,7 +179,7 @@ body {
   input[type="checkbox"]:checked + span {
     background: #D9534F -19px top no-repeat;
   }
-  
+
   input[type="checkbox"] + span {
     margin-right: 4px;
   }

@@ -1,10 +1,11 @@
 import React from "react";
-import { useSetSource } from "../../hooks/useSettings.js";
+import { useSetSource, useSetSourceRefresh } from "../../hooks/useSettings.js";
 import SlideToggle from "../utils/SlideToggle.jsx";
+import { MdRefresh } from "react-icons/md";
 
 const SourceControl = () => {
   const { source, setSource } = useSetSource();
-
+  const { sourceRefresh, setSourceRefresh } = useSetSourceRefresh()
   return (
     <>
       <div className="react-sigma-control source-control">
@@ -23,6 +24,9 @@ const SourceControl = () => {
             },
           ]}
         />
+        <button className="refresh" title="Refresh" onClick={()=>{setSourceRefresh({ source: source() })}}>
+          <MdRefresh />
+        </button>
       </div>
     </>
   );
