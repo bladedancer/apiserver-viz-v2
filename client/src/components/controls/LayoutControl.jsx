@@ -19,13 +19,22 @@ Cytoscape.use(fcose);
 Cytoscape.use(avsdf);
 Cytoscape.use(COSEBilkent);
 
-const LayoutControl = () => {
+const LayoutControl = ({
+  className,
+  style,
+  children
+}) => {
   const cy = useCy();
   const [opened, setOpened] = useState(false);
   const [layout, setLayout] = useState("breadthfirst");
   const [activeLayout, setActiveLayout] = useState();
   const {contentModifiedTS} = useSetContentModifiedTS();
 
+  // Common html props for the div wrapper
+  const htmlProps = {
+    style,
+    className: `react-cy-control ${className || ""}`,
+  };
 
   const layouts = useMemo(() => {
     return {
@@ -216,57 +225,53 @@ const LayoutControl = () => {
 
   return (
     <>
-      <div>
-        <div className="react-sigma-control">
-          <button onClick={() => setOpened((e) => !e)} title="Select layout">
-            <FaProjectDiagram />
-          </button>
-          {opened === true && (
-            <ul
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: "35px",
-                backgroundColor: "#e7e9ed",
-                margin: 0,
-                padding: 0,
-                listStyle: "none",
-              }}
-            >
-              {Object.keys(layouts).map((name) => {
-                return (
-                  <li key={name}>
-                    <button
-                      className="btn btn-link"
-                      style={{
-                        fontWeight: layout === name ? "bold" : "normal",
-                        width: "100%",
-                        whiteSpace: "nowrap",
-                      }}
-                      onClick={() => {
-                        setLayout(name);
-                        setOpened(false);
-                      }}
-                    >
-                      {name}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
-        <div className="react-sigma-control">
-          <button onClick={() => runLayout()} title="Re-run layout" disabled={activeLayout}>
-            <FaPlay />
-          </button>
-        </div>
-        <div className="react-sigma-control">
-          <button onClick={() => stopLayout()} title="Stop layout" disabled={!activeLayout || !activeLayout.options.animate}>
-            <FaStop />
-          </button>
-        </div>
-
+      <div {...htmlProps}>
+        <button onClick={() => setOpened((e) => !e)} title="Select layout">
+          <FaProjectDiagram />
+        </button>
+        {opened === true && (
+          <ul
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: "35px",
+              margin: 0,
+              padding: 0,
+              listStyle: "none",
+            }}
+          >
+            {Object.keys(layouts).map((name) => {
+              return (
+                <li key={name}>
+                  <button
+                    className="btn btn-link"
+                    style={{
+                      fontWeight: layout === name ? "bold" : "normal",
+                      width: "100%",
+                      whiteSpace: "nowrap",
+                    }}
+                    onClick={() => {
+                      setLayout(name);
+                      setOpened(false);
+                    }}
+                  >
+                    {name}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+      <div {...htmlProps}>
+        <button onClick={() => runLayout()} title="Re-run layout" disabled={activeLayout}>
+          <FaPlay />
+        </button>
+      </div>
+      <div {...htmlProps}>
+        <button onClick={() => stopLayout()} title="Stop layout" disabled={!activeLayout || !activeLayout.options.animate}>
+          <FaStop />
+        </button>
       </div>
     </>
   );
