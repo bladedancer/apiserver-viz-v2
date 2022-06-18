@@ -1,7 +1,7 @@
 import React from "react";
 import { useSetSource, useSetSourceRefresh } from "../../hooks/useSettings.js";
 import SlideToggle from "../utils/SlideToggle.jsx";
-import { MdRefresh } from "react-icons/md";
+import { FiRotateCw } from "react-icons/fi";
 
 const SourceControl = () => {
   const { source, setSource } = useSetSource();
@@ -25,7 +25,7 @@ const SourceControl = () => {
           ]}
         />
         <button className="refresh" title="Refresh" onClick={()=>{setSourceRefresh({ source: source() })}} disabled={sourceRefresh().busy}>
-          <MdRefresh className={sourceRefresh().busy ? "busy" : ""}/>
+          <FiRotateCw className={sourceRefresh().busy ? "busy" : ""}/>
         </button>
       </div>
     </>

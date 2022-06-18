@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useCy } from "../../hooks/useCy.js";
 import { saveAs } from 'file-saver';
-import { FaSpinner, FaDownload } from "react-icons/fa";
-
+import { FiRefreshCw, FiDownload } from "react-icons/fi";
 
 const ExportControl = () => {
     const [ busy, setBusy ] = useState(false);
@@ -24,8 +23,8 @@ const ExportControl = () => {
         <>
             <div className="react-cy-control export-control">
                 <button onClick={exportCy} disabled={busy}>
-                    {busy && <FaSpinner/>}
-                    {!busy && <FaDownload/>}
+                    {busy && <FiRefreshCw />}
+                    {!busy && <FiDownload />}
                     Export PNG
                 </button>
             </div>
