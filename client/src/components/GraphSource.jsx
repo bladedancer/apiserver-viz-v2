@@ -203,6 +203,7 @@ function nodifyInstances(instances) {
       group: inst.group,
       kind: inst.kind,
       name: inst.name,
+      hasFinalizer: inst.finalizers && inst.finalizers.length > 0,
       isScope,
       scope: isScope
         ? null

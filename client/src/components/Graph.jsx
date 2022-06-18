@@ -22,7 +22,8 @@ const Graph = ({nodeData, children}) => {
                     root: n.isScope,
                     groupIndex: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
                     groupId: nodeData.scopes.find(s => s.id === (n.isScope ? n.id : n.scope.id)).id,
-                }
+                },
+                classes: `${n.hasFinalizer ? 'hasFinalizer ' : ''}${n.isScope ? 'scope ' : ''}`
             });
         });
         nodeData.nodes.forEach(n => {
@@ -58,6 +59,23 @@ const Graph = ({nodeData, children}) => {
                 padding: "8px",
                 shape: "round-rectangle",
                 'min-zoomed-font-size': 8,
+            }
+        },
+        {
+            selector: "node.scope",
+            style: {
+                "shape": "hexagon"
+            }
+        },
+        {
+            selector: "node.hasFinalizer",
+            style: {
+                "shape": "ellipse"
+                // 'background-image': "data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!DOCTYPE%20svg%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%3Cg%3E%3Cpath%20d%3D%22M365.7%2C256v-73.1c0-60.6-49.1-109.7-109.7-109.7s-109.7%2C49.1-109.7%2C109.7V256H365.7z%20M36.6%2C256h36.6v-73.1%20C73.1%2C81.9%2C155%2C0%2C256%2C0s182.9%2C81.9%2C182.9%2C182.9V256h36.6v256H36.6V256z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E",
+                // 'background-fit': 'none',
+                // 'background-height': '40px',
+                // 'background-width': '40px',
+                // 'background-image-opacity': 1
             }
         },
         {
