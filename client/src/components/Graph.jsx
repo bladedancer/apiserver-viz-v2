@@ -134,18 +134,25 @@ const Graph = ({nodeData, children}) => {
         }
     ]
 
+    // Have to use a ref here so that it can be updated.
+    const setSel = useRef(setSelection)
+    useEffect(() => {
+        setSel.current = setSelection;
+    }, [setSelection])
+
+
     useEffect(() => {
         if (!cy) {
             return;
         }
         cy.on("select", () => {
-            setSelection(cy.nodes().filter(":selected"));
+            setSel.current(cy.nodes().filter(":selected"));
         });
         cy.on("unselect", () => {
-            setSelection(cy.nodes().filter(":selected"));
+            setSel.current(cy.nodes().filter(":selected"));
         });
         cy.on("boxselect", () => {
-            setSelection(cy.nodes().filter(":selected"));
+            setSel.current(cy.nodes().filter(":selected"));
         });
     }, [cy])
 

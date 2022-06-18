@@ -326,7 +326,7 @@ const GraphSource = ({ children }) => {
       <ControlsContainer position={"top-left"}>
         <SourceControl />
         <FilterControl />
-        <ExportControl nodeData={nodeData} />
+        <ExportControl />
       </ControlsContainer>
       <ControlsContainer position={"bottom-right"}>
         <ZoomControl />

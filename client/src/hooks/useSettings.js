@@ -58,7 +58,7 @@ export function useSetSource() {
 
     return {
         source: getSource,
-        setSource: (source) => setSettings({...settings, source})
+        setSource: (source) => setSettings({...settings, source, selection: []})
     };
 }
 
