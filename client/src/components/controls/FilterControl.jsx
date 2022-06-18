@@ -3,7 +3,7 @@ import { useCy } from "../../hooks/useCy.js";
 import { useSetNodeFilter, useSetEdgeFilter } from "../../hooks/useSettings.js";
 import Toggle from "../utils/Toggle.jsx";
 
-const FilterControl = () => {
+const FilterControl = (nodeData) => {
   const cy = useCy();
   const { nodeFilter, setNodeFilter } = useSetNodeFilter();
   const { edgeFilter, setEdgeFilter } = useSetEdgeFilter();
@@ -69,7 +69,7 @@ const FilterControl = () => {
         }
       });
     });
-  }, [cy, nodeFilter(), edgeFilter()]);
+  }, [cy, nodeData, nodeFilter(), edgeFilter()]);
 
   return (
     <>
