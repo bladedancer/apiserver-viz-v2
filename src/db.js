@@ -23,8 +23,8 @@ class DBStore {
     }
 
     async loadFromServer() {
-        await refresh('definitions');
-        await refresh('instances');
+        await this.refresh('definitions');
+        await this.refresh('instances');
     }
 
     async loadFromStore() {
