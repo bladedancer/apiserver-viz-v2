@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { FiGrid, FiPlay, FiPause } from "react-icons/fi";
+import { FiGrid, FiPlay, FiPause, FiSettings } from "react-icons/fi";
+import Form from "@rjsf/core";
 import { useCy } from "../../hooks/useCy";
 import { useSetContentModifiedTS } from "../../hooks/useSettings.js";
 import Cytoscape from "cytoscape";
@@ -10,6 +11,7 @@ import cola from "cytoscape-cola";
 import cise from "cytoscape-cise";
 import klay from "cytoscape-klay";
 import euler from "cytoscape-euler";
+import Button from "../utils/Button.jsx"
 
 Cytoscape.use(euler);
 Cytoscape.use(klay);
@@ -26,6 +28,7 @@ const LayoutControl = ({
 }) => {
   const cy = useCy();
   const [opened, setOpened] = useState(false);
+  const [layoutConfigOpened, setLayoutConfigOpened] = useState(false);
   const [layout, setLayout] = useState("breadthfirst");
   const [activeLayout, setActiveLayout] = useState();
   const {contentModifiedTS} = useSetContentModifiedTS();
@@ -40,6 +43,7 @@ const LayoutControl = ({
     return {
       avsdf: {
         name: "avsdf",
+
         //https://github.com/iVis-at-Bilkent/cytoscape.js-avsdf
       },
       breadthfirst: {
@@ -48,6 +52,15 @@ const LayoutControl = ({
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: true,
         //https://js.cytoscape.org/#layouts/breadthfirst
+
+        schema: {
+          title: "breadthfirst",
+          type: "object",
+          properties: {
+            avoidOverlap: {type: "boolean", title: "Avoid Overlap", default: true},
+            circle: {type: "boolean", title: "Circle", default: true},
+          }
+        }
       },
       circle: {
         name: "circle",
@@ -71,6 +84,15 @@ const LayoutControl = ({
         //randomize: true,
         fit: false,
         //https://github.com/cytoscape/cytoscape.js-cola
+        schema: {
+          title: "cola",
+          type: "object",
+          properties: {
+            avoidOverlap: {type: "boolean", title: "Avoid Overlap", default: true},
+            convergenceThreshold: {type: "number", title: "Convergence Threshold", default: 0.1, minimum: 0, maximum: 100,},
+            infinite: {type: "boolean", title: "Infinite", default: true},
+          }
+        }
       },
       concentric: {
         name: "concentric",
@@ -242,25 +264,28 @@ const LayoutControl = ({
           >
             {Object.keys(layouts).map((name) => {
               return (
-                <li key={name}>
-                  <button
-                    className="btn btn-link"
-                    style={{
-                      fontWeight: layout === name ? "bold" : "normal",
-                      width: "100%",
-                      whiteSpace: "nowrap",
-                    }}
-                    onClick={() => {
-                      setLayout(name);
-                      setOpened(false);
-                    }}
-                  >
-                    {name}
-                  </button>
-                </li>
-              );
+                <li key={name} className="layout-option">
+                <Button
+                  title={name}
+                  active={layout == name}
+                  action={() => {
+                    setLayout(name);
+                    setOpened(false);
+                  }}
+                  altIcon={<FiSettings />}
+                  altEnabled={layout == name}
+                  altAction={() => {
+                    setLayoutConfigOpened(true);
+                    setOpened(false);
+                  }} />
+                  </li>);
             })}
           </ul>
+        )}
+        {layoutConfigOpened === true && (
+          <div className="layout-config">
+            <Form schema={layouts[layout].schema} />
+          </div>
         )}
       </div>
       <div {...htmlProps}>

@@ -93,6 +93,21 @@ body {
 }
 
 /**
+ * Layout
+ */
+.layout-option {
+    width: 125px;
+}
+
+.layout-config {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    margin-right: 70px;
+}
+
+/**
    * Search style
    */
 .react-cy-search {
@@ -191,7 +206,7 @@ body {
 /*
  * Checkbox
  */
- input[type="checkbox"] {
+ /* input[type="checkbox"] {
     display: none;
   }
   input[type="checkbox"] + span {
@@ -212,4 +227,4 @@ body {
 
   input[type="checkbox"] + span {
     margin-right: 4px;
-  }
+  } */
