@@ -25,34 +25,217 @@ Cytoscape.use(COSEBilkent);
 const supportedLayouts = {
   avsdf: {
     name: "avsdf",
-
+    refresh: 30,
+    fit: true,
+    padding: 10,
+    ungrabifyWhileSimulating: false,
+    animate: "end",
+    animationDuration: 500,
+    nodeSeparation: 60,
+    schema: {
+      title: "avsdf",
+      type: "object",
+      properties: {
+        animate: {
+          type: "string",
+          title: "Animate",
+          default: "end",
+          enum: ["during", "end"],
+          description: "Type of layout animation"
+        },
+        animationDuration: {
+          type: "number",
+          title: "Animation Duration",
+          default: 500,
+          description: "Duration for animate:end"
+        },
+        fit: {
+          type: "boolean",
+          title: "Fit",
+          default: true,
+          description: "Whether to fit the network view after when done"
+        },
+        nodeSeparation: {
+          type: "number",
+          title: "Node Separation",
+          default: 60,
+        },
+        padding: {
+          type: "number",
+          title: "Padding",
+          default: 10,
+          description: "Padding on fit"
+        },
+        refresh: {
+          type: "number",
+          title: "Refresh",
+          description: "Number of ticks per frame; higher is faster but more jerky",
+          default: 10,
+        },
+        ungrabifyWhileSimulating: {
+          type: "boolean",
+          title: "Ungrabify While Simulating",
+          default: false,
+          description: "Prevent the user grabbing nodes during the layout"
+        },
+      }
+    }
     //https://github.com/iVis-at-Bilkent/cytoscape.js-avsdf
   },
   breadthfirst: {
     name: "breadthfirst",
+    fit: true,
+    directed: false,
+    padding: 30,
     circle: true,
+    grid: false,
+    spacingFactor: 1.75,
     avoidOverlap: true,
+    maximal: false,
     nodeDimensionsIncludeLabels: true,
-    //https://js.cytoscape.org/#layouts/breadthfirst
-
+    spacingFactor: 1,
+    animate: false,
+    animationDuration: 500,
     schema: {
       title: "breadthfirst",
       type: "object",
       properties: {
-        avoidOverlap: {type: "boolean", title: "Avoid Overlap", default: true},
-        circle: {type: "boolean", title: "Circle", default: true},
+        animate: {
+          type: "boolean",
+          title: "Animate",
+          default: false,
+        },
+        animationDuration: {
+          type: "number",
+          title: "Animation Duration",
+          default: 500,
+        },
+        avoidOverlap: {
+          type: "boolean",
+          title: "Avoid Overlap",
+          default: true,
+        },
+        circle: {
+          type: "boolean",
+          title: "Circle",
+          default: true,
+        },
+        directed: {
+          type: "boolean",
+          title: "Directed",
+          default: false,
+        },
+        fit: {
+          type: "boolean",
+          title: "Fit",
+          default: true,
+        },
+        grid: {
+          type: "boolean",
+          title: "Grid",
+          default: true,
+        },
+        maximal: {
+          type: "boolean",
+          title: "Maximal",
+          default: true,
+        },
+        nodeDimensionsIncludeLabels: {
+          type: "boolean",
+          title: "Node Dimensions Include Labels",
+          default: true,
+        },
+        padding: {
+          type: "number",
+          title: "Padding",
+          default: 30,
+        },
+        spacingFactor: {
+          type: "number",
+          title: "Spacing Factor",
+          default: 1.75,
+        },
       }
     }
+    //https://js.cytoscape.org/#layouts/breadthfirst
   },
   circle: {
     name: "circle",
-    nodeDimensionsIncludeLabels: true,
+    animate: false, // whether to transition the node positions
+    animationDuration: 500, // duration of animation in ms if enabled
+    avoidOverlap: true, // prevents node overlap, may overflow boundingBox and radius if not enough space
+    clockwise: true, // whether the layout should go clockwise (true) or counterclockwise/anticlockwise (false)
+    fit: true, // whether to fit the viewport to the graph
+    nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
+    padding: 30, // the padding on fit
+    radius: 100, // the radius of the circle
+    spacingFactor: 1, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
+    startAngle: 3 / 2 * Math.PI, // where nodes start in radians
+    sweep: 2 * Math.PI, // how many radians should be between the first and last node (defaults to full circle)
+    schema: {
+      title: "circle",
+      type: "object",
+      properties: {
+        animate: {
+          type: "boolean",
+          title: "Animate",
+          default: false,
+        },
+        animationDuration: {
+          type: "number",
+          title: "Animation Duration",
+          default: 500,
+        },
+        avoidOverlap: {
+          type: "boolean",
+          title: "Avoid Overlap",
+          default: true,
+        },
+        clockwise: {
+          type: "boolean",
+          title: "Clockwise",
+          default: true,
+        },
+        fit: {
+          type: "boolean",
+          title: "Fit",
+          default: true,
+        },
+        nodeDimensionsIncludeLabels: {
+          type: "boolean",
+          title: "Node Dimensions Include Labels",
+          default: true,
+        },
+        padding: {
+          type: "number",
+          title: "Padding",
+          default: 30,
+        },
+        radius: {
+          type: "number",
+          title: "Radius",
+        },
+        spacingFactor: {
+          type: "number",
+          title: "Spacing Factor",
+          default: 1.75,
+        },
+        startAngle: {
+          type: "number",
+          title: "Start Angle",
+          default:  3 / 2 * Math.PI,
+        },
+        sweep: {
+          type: "number",
+          title: "Sweep",
+          default: 2 * Math.PI,
+        },
+      }
+    }
     //https://js.cytoscape.org/#layouts/circle
   },
   cola: {
     name: "cola",
-    nodeDimensionsIncludeLabels: true,
-    infinite: true,
     edgeLength: (e) => {
       let length =
         e.source().data("groupId") === e.target().data("groupId")
@@ -60,21 +243,93 @@ const supportedLayouts = {
           : 300;
       return length;
     },
-    convergenceThreshold: 0.1,
-    avoidOverlap: true,
 
-    //randomize: true,
-    fit: false,
-    //https://github.com/cytoscape/cytoscape.js-cola
+    animate: true, // whether to show the layout as it's running
+    infinite: true,
+    refresh: 1, // number of ticks per frame; higher is faster but more jerky
+    maxSimulationTime: 4000, // max length in ms to run the layout
+    ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
+    fit: false, // on every layout reposition of nodes, fit the viewport
+    padding: 30, // padding around the simulation
+    nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
+    randomize: false, // use random node positions at beginning of layout
+    avoidOverlap: true, // if true, prevents overlap of node bounding boxes
+    handleDisconnected: true, // if true, avoids disconnected components from overlapping
+    convergenceThreshold: 0.01, // when the alpha value (system energy) falls below this value, the layout stops
+    centerGraph: false, // adjusts the node positions initially to center the graph (pass false if you want to start the layout from the current position)
+
     schema: {
-      title: "cola",
+      title: "circle",
       type: "object",
       properties: {
-        avoidOverlap: {type: "boolean", title: "Avoid Overlap", default: true},
-        convergenceThreshold: {type: "number", title: "Convergence Threshold", default: 0.1, minimum: 0, maximum: 100,},
-        infinite: {type: "boolean", title: "Infinite", default: true},
+        animate: {
+          type: "boolean",
+          title: "Animate",
+          default: false,
+        },
+        avoidOverlap: {
+          type: "boolean",
+          title: "Avoid Overlap",
+          default: true,
+        },
+        centerGraph: {
+          type: "boolean",
+          title: "Center Graph",
+          default: false,
+        },
+        convergenceThreshold: {
+          type: "number",
+          title: "Convergence Threshold",
+          default: 0.01,
+        },
+        fit: {
+          type: "boolean",
+          title: "Fit",
+          default: false,
+        },
+        handleDisconnected: {
+          type: "boolean",
+          title: "Handle Disconnected",
+          default: true,
+        },
+        infinite: {
+          type: "boolean",
+          title: "Infinite",
+          default: true,
+        },
+        maxSimulationTime: {
+          type: "number",
+          title: "Max Simulation Time",
+          default: 4000,
+        },
+        nodeDimensionsIncludeLabels: {
+          type: "boolean",
+          title: "Node Dimensions Include Labels",
+          default: true,
+        },
+        padding: {
+          type: "number",
+          title: "Padding",
+          default: 30,
+        },
+        randomize: {
+          type: "boolean",
+          title: "Randomize",
+          default: false,
+        },
+        refresh: {
+          type: "number",
+          title: "Refresh",
+          default: 1,
+        },
+        ungrabifyWhileSimulating: {
+          type: "boolean",
+          title: "Ungrabify While Simulating",
+          default: false,
+        },
       }
     }
+    //https://github.com/cytoscape/cytoscape.js-cola
   },
   concentric: {
     name: "concentric",
@@ -281,6 +536,7 @@ const LayoutControl = ({
             }}
           >
             {Object.keys(layouts).map((name) => {
+              const hasSchema = !!layouts[layout].schema;
               return (
                 <li key={name} className="layout-option">
                 <Button
@@ -290,12 +546,12 @@ const LayoutControl = ({
                     setLayout(name);
                     setOpened(false);
                   }}
-                  altIcon={<FiSettings />}
-                  altEnabled={layout == name}
-                  altAction={() => {
+                  altIcon={hasSchema && <FiSettings />}
+                  altEnabled={hasSchema && (layout == name)}
+                  altAction={hasSchema && (() => {
                     setLayoutConfigOpened(true);
                     setOpened(false);
-                  }} />
+                  })} />
                   </li>);
             })}
           </ul>
