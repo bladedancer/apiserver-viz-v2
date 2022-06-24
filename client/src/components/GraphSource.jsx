@@ -321,10 +321,10 @@ const GraphSource = ({ children }) => {
     <>
       <Graph nodeData={nodeData}>{children}</Graph>
       <ControlsContainer position={"top-right"}>
-        <SummaryControl resources={graphState} nodeData={nodeData} />
       </ControlsContainer>
       <ControlsContainer position={"top-left"}>
         <SourceControl />
+        <SummaryControl resources={graphState} nodeData={nodeData} />
         <FilterControl />
         <ExportControl />
       </ControlsContainer>
