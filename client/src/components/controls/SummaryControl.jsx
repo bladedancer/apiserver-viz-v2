@@ -53,8 +53,6 @@ const InstancesSummaryControl = ({ resources, nodeData }) => {
     let [selectedValues, setSelectedValues] = useState([]);
     const { nodeFilter, setNodeFilter } = useSetNodeFilter();
 
-    console.log(resources, nodeData);
-
     let scopesByKind = nodeData.scopes.reduce((acc, current) => {
         acc[current.kind] = acc[current.kind] || [];
         acc[current.kind].push(current);
