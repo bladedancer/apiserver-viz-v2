@@ -623,14 +623,14 @@ const LayoutControl = ({
     setActiveLayout(null);
   }, [activeLayout, setActiveLayout]);
 
-  // When the overrides whindow closes rerun layout
+  // When the overrides change rerun layout
   useEffect(async () => {
     if (isMounted.current) {
-      !layoutConfigOpened && runLayout();
+      runLayout();
     } else {
       isMounted.current = true;
     }
-  }, [layoutConfigOpened, setLayoutConfigOpened])
+  }, [layoutConfigOpened, layoutOverrides])
 
   return (
     <>
@@ -679,11 +679,13 @@ const LayoutControl = ({
             <Form
               schema={layouts[layout].schema}
               formData={layouts[layout]}
-              onSubmit={({formData}, e) => {
+              uiSchema={{
+                "ui:submitButtonOptions": {"norender": true}
+              }}
+              onChange={({formData}, e) => {
                 setLayoutOverrides({
                   [layout]: formData
                 });
-                setLayoutConfigOpened(false);
               }}
             />
           </div>
