@@ -20,6 +20,8 @@ const Graph = ({nodeData, children}) => {
                     color: n.color,
                     linkType: n.refType,
                     root: n.isScope,
+                    kind: n.kind,
+                    apigroup: n.group,
                     groupIndex: nodeData.scopes.findIndex(s => s.id === (n.isScope ? n.id : n.scope.id)),
                     groupId: nodeData.scopes.find(s => s.id === (n.isScope ? n.id : n.scope.id)).id,
                 },
