@@ -13,7 +13,8 @@ const GraphContainer = ({ children }) => {
       },
       nodes: {
         filter: "",
-        connected: false
+        connected: false,
+        direction: "both"
       },
       edges: {
         scope: true,

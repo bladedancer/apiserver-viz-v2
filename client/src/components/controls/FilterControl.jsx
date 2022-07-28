@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useCy } from "../../hooks/useCy.js";
 import { useSetNodeFilter, useSetEdgeFilter } from "../../hooks/useSettings.js";
 import Toggle from "../utils/Toggle.jsx";
+import SlideToggle from "../utils/SlideToggle.jsx";
 
 const FilterControl = () => {
   const cy = useCy();
@@ -30,8 +31,13 @@ const FilterControl = () => {
       if ((nf.filter || nf.ids) && nf.connected) {
         cy.nodes(":visible").forEach(root => {
           let nodes = cy.collection();
-          nodes.merge(root.predecessors());
-          nodes.merge(root.successors());
+          console.log(nf);
+          if (!nf.direction || nf.direction === "both" || nf.direction === "inbound") {
+            nodes.merge(root.predecessors());
+          }
+          if (!nf.direction || nf.direction === "both" || nf.direction === "outbound") {
+            nodes.merge(root.successors());
+          }
           nodes.merge(root);
 
           nodes.forEach(goal => {
@@ -40,6 +46,7 @@ const FilterControl = () => {
               goal,
               weight: (e) => {
                 let type = e.data("type");
+                // TODO: DIRECTION
                 if ((type == "scope" && ef.scope)
                     || (type == "hard" && ef.hard)
                     || (type == "soft" && ef.soft))  {
@@ -82,16 +89,40 @@ const FilterControl = () => {
               name="filter"
               placeholder="Filter displayed resources"
               value={nodeFilter().filter}
-              onChange={ (e) => setNodeFilter({ filter: e.target.value, connected: false })} // Need to debounce this
+              onChange={ (e) => setNodeFilter({ filter: e.target.value, connected: false, direction: nodeFilter().direction })} // Need to debounce this
             />
           </label>
         </div>
         <Toggle
           checked={nodeFilter().connected}
-          onChange={() => setNodeFilter({ connected: !nodeFilter().connected })}
+          onChange={() => setNodeFilter({ connected: !nodeFilter().connected, direction: nodeFilter().direction })}
         >
           Connected Nodes
         </Toggle>
+        {nodeFilter().connected &&
+          <SlideToggle
+            className="connected-toggle"
+            selected={nodeFilter().direction}
+            onChange={(e) => setNodeFilter({
+              filter: nodeFilter().filter,
+              connected: nodeFilter().connected,
+              direction: e })}
+            options={[
+              {
+                value: "both",
+                label: "Both",
+              },
+              {
+                value: "inbound",
+                label: "In",
+              },
+              {
+                value: "outbound",
+                label: "Out",
+              }
+            ]}
+          />
+        }
         <div className="edge-filter-control">
           <Toggle
             checked={edgeFilter().scope}

@@ -22,17 +22,17 @@ api.get('/instances', async (req, res) => {
     res.json(db.instances());
 });
 
-api.get('/instances/refresh', async (req, res) => {
+api.get('/instances/refresh', async (req, res, next) => {
     try {
         await db.refresh('instances');
         res.json(db.instances());
     } catch (e) {
         log.error(e);
-        next(e)
+        next(e);
     }
 });
 
-api.get('/loading', async (req, res) => {
+api.get('/loading', async (req, res, next) => {
     res.json(db.loading());
 });
 

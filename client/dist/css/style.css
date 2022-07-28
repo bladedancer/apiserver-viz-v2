@@ -169,6 +169,10 @@ body {
     padding: 5px;
 }
 
+.connected-toggle {
+    margin: 2px 0;
+}
+
 /**
  * Export
  */

@@ -21,3 +21,8 @@
     margin: 2px;
     display: block;
 }
+
+
+.summary-control .optionListContainer {
+    z-index: 10;
+}
