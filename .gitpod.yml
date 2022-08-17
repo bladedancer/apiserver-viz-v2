@@ -7,12 +7,12 @@ tasks:
       gp sync-done installation
     env:
       DEBUG: "*"
-      BROWSER: /ide/bin/remote-cli/gitpod-code --openExternal
+      BROWSER: /ide/bin/remote-cli/gitpod-code --preview
   - init: gp sync-await installation
     command: npm run start
     env:
       DEBUG: "*"
-      BROWSER: /ide/bin/remote-cli/gitpod-code --openExternal
+      BROWSER: /ide/bin/remote-cli/gitpod-code --preview
   - init: gp sync-await installation
     command: gp ports await 8080 && gp preview $(gp url 8080)
 
