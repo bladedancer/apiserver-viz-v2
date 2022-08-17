@@ -1,8 +1,238 @@
-html,body {
+html,
+body {
     height: 100%;
+    overflow: hidden;
 }
 
 #root {
     height: 100%;
     width: 100%;
 }
+
+:root {
+    --cy-background-color: #fff;
+    --cy-controls-background-color: #fff;
+    --cy-controls-background-color-hover: rgba(0, 0, 0, 0.2);
+    --cy-controls-border-color: rgba(0, 0, 0, 0.2);
+    --cy-controls-color: #000;
+    --cy-controls-zindex: 100;
+    --cy-controls-margin: 5px;
+    --cy-controls-size: 32px;
+}
+
+/**
+   * Cy controls wrapper
+   */
+.react-cy-controls {
+    position: absolute;
+    z-index: var(--cy-controls-zindex);
+    border: 2px solid var(--cy-controls-border-color);
+    border-radius: 4px;
+    color: var(--cy-controls-color);
+    background-color: var(--cy-controls-background-color);
+}
+
+.react-cy-controls.bottom-right {
+    bottom: var(--cy-controls-margin);
+    right: var(--cy-controls-margin);
+}
+
+.react-cy-controls.bottom-left {
+    bottom: var(--cy-controls-margin);
+    left: var(--cy-controls-margin);
+}
+
+.react-cy-controls.top-right {
+    top: var(--cy-controls-margin);
+    right: var(--cy-controls-margin);
+}
+
+.react-cy-controls.top-left {
+    top: var(--cy-controls-margin);
+    left: var(--cy-controls-margin);
+}
+
+.react-cy-controls:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.react-cy-controls:last-child {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+/**
+   * Cy control button
+   */
+.react-cy-control {
+    width: var(--cy-controls-size);
+    height: var(--cy-controls-size);
+    line-height: var(--cy-controls-size);
+    background-color: var(--cy-controls-background-color);
+    border-bottom: 1px solid var(--cy-controls-border-color);
+}
+
+.react-cy-control>button {
+    display: block;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: var(--cy-controls-size);
+    height: var(--cy-controls-size);
+    line-height: var(--cy-controls-size);
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-color: var(--cy-controls-background-color);
+    clip: rect(0, 0, 0, 0);
+}
+
+.react-cy-control>button:hover {
+    background-color: var(--cy-controls-background-color-hover);
+}
+
+/**
+ * Layout
+ */
+.layout-option {
+    width: 125px;
+}
+
+.layout-config {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    margin-right: 70px;
+    background-color: var(--cy-controls-background-color);
+    max-height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/**
+   * Search style
+   */
+.react-cy-search {
+    background-color: var(--cy-controls-background-color);
+}
+
+.react-cy-search label {
+    visibility: hidden;
+}
+
+.react-cy-search input {
+    color: var(--cy-controls-color);
+    background-color: var(--cy-controls-background-color);
+    font-size: 1em;
+    width: 100%;
+    border: none;
+}
+
+.source-control {
+    width: 260px;
+    display: flex;
+    padding: 10px 5px 5px 5px;
+}
+
+.source-toggle {
+    width: 200px;
+}
+
+.source-control .refresh {
+    margin-left: 10px;
+}
+
+.source-control .refresh svg.busy {
+    animation-name: ckw;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+@keyframes ckw {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/**
+ * Filter
+ */
+.filter-control {
+    border: none;
+    margin: 2vh 2px 2px 2px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.connected-toggle {
+    margin: 2px 0;
+}
+
+/**
+ * Export
+ */
+.export-control {
+    border: none;
+    width: 100%
+}
+
+.export-control button {
+    width: 100%
+}
+
+.export-control svg {
+    margin-right: 5px;
+}
+
+/**
+ * Node Filter
+ */
+ .node-filter-control {
+     display: flex;
+     flex-direction: row;
+ }
+
+ .node-filter-control label{
+    text-align: center;
+}
+
+.node-filter-control input {
+    border:0;
+    padding: 0 0 0 5px;
+}
+
+.edge-filter-control {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ * Checkbox
+ */
+ /* input[type="checkbox"] {
+    display: none;
+  }
+  input[type="checkbox"] + span {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: 12px;
+    height: 12px;
+    margin: -1px 0px 0 0;
+    vertical-align: middle;
+    background: white left top no-repeat;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:checked + span {
+    background: #D9534F -19px top no-repeat;
+  }
+
+  input[type="checkbox"] + span {
+    margin-right: 4px;
+  } */

@@ -6,7 +6,7 @@ export async function getResourceInstances(account, def) {
     let version = def.versions[def.versions.length - 1].spec.name;
     let kindPlural = def.resource.spec.plural;
     try {
-        return await apicRequest(account, `/${group}/${version}/${kindPlural}`, ['name', 'kind', 'metadata', 'group', 'apiVersion']);
+        return await apicRequest(account, `/${group}/${version}/${kindPlural}`, ['name', 'kind', 'metadata', 'group', 'apiVersion', 'finalizers']);
     } catch(e) {
         // Ignore 403 (not everything is readable)
         if (e.response.statusCode !== 403) {

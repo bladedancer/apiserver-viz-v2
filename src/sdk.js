@@ -1,5 +1,7 @@
 import { initSDK } from '@axway/amplify-cli-utils';
-const { sdk } = initSDK();
+import config from './config.js';
+
+const { sdk } = initSDK({}, config.PLATFORM_CONFIG);
 
 async function authenticate() {
     try {
@@ -16,6 +18,6 @@ async function authenticate() {
 let account = await authenticate();
 
 export {
-    account, 
+    account,
     sdk
 };

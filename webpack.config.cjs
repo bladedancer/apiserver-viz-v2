@@ -12,6 +12,11 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+        //loader: 'svg-inline-loader'
+      },
+      {
         test: [/\.jsx$/],
         exclude: /node_modules/,
         use: {

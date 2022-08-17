@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Graph from './Graph.jsx';
+import GraphContainer from './GraphContainer.jsx';
+import GraphSource from './GraphSource.jsx';
 import WithLoading from './WithLoading.jsx';
 
 const App = () => {
-  const GraphWithLoading = WithLoading(Graph)
+  const GraphWithLoading = WithLoading(GraphContainer)
   const [appState, setAppState] = useState({
     loading: true
   });
@@ -17,7 +18,9 @@ const App = () => {
   }, [setAppState]);
 
   return (
-      <GraphWithLoading isLoading={appState.loading} />
+      <GraphWithLoading isLoading={appState.loading} >
+        <GraphSource />
+      </GraphWithLoading>
   );
 }
 
