@@ -1,5 +1,7 @@
-# This won't work - the task is in a container and cli auth is trying to do a url open....won't work.
-# Run it manually from a bash prompt instead.
+# This won't work right - the task is in a container and cli auth is trying to do a url open.
+# Using gp preview as the browser....but platform CSP doesn't allow it to be embedded...so you
+# have to open it external....the open external does a localhost redirect.
+# So you have to open a bash and manually exect the responses.
 
 tasks:
   - init: |
@@ -14,7 +16,7 @@ tasks:
       DEBUG: '*'
       BROWSER: gp preview --external
   - init: gp sync-await installation
-    command: gp ports await 8080 && gp preview $(gp url 8080)
+    command: gp ports await 8080 && gp preview --external $(gp url 8080)
 
 ports:
   - port: 3000
