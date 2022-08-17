@@ -2,15 +2,19 @@
 # Run it manually from a bash prompt instead.
 
 tasks:
-  - init: npm install
+  - init: |
+      npm install
+      gp sync-done installation
     env:
       DEBUG: "*"
       BROWSER: /ide/bin/remote-cli/gitpod-code --openExternal
-  - command: npm run start
+  - init: gp sync-await installation
+    command: npm run start
     env:
       DEBUG: "*"
       BROWSER: /ide/bin/remote-cli/gitpod-code --openExternal
-  - command: gp ports await 8080 && gp preview $(gp url 8080)
+  - init: gp sync-await installation
+    command: gp ports await 8080 && gp preview $(gp url 8080)
 
 ports:
   - port: 3000
