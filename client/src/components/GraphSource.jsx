@@ -35,6 +35,11 @@ function references(scopes, def) {
       let targetRef = ref["x-amplify-kind-ref"];
       let refType = ref["x-amplify-kind-ref-type"] || "hard";
 
+      // For now not rendering dynamic refs.
+      if (targetRef.startsWith("../")) {
+        return;
+      }
+
       let targetRefParts = targetRef.split("/");
       let group;
       let scope;
